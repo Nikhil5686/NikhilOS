@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="NikhilOS — Futuristic AI Portfolio of Nikhil Raj. AI Engineer, Cybersecurity Expert & Tech Creator."/>
+  <meta name="theme-color" content="#050714"/>
+  <title>NikhilOS | Nikhil Raj — AI + Tech Creator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css"/>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div id="cx-dot"></div>
+<div id="cx-ring"></div>
+
+<!-- ====== BOOT SCREEN ====== -->
+<div id="boot">
+  <div class="boot-bg-anim"></div>
+  <div class="boot-center">
+    <div class="boot-hex-icon">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <path d="M24 2L44 13.5V35.5L24 47L4 35.5V13.5L24 2Z" stroke="#00f0ff" stroke-width="1.5" fill="rgba(0,240,255,0.05)"/>
+        <path d="M24 10L38 18V34L24 42L10 34V18L24 10Z" stroke="#00f0ff" stroke-width="1" fill="none" opacity="0.4"/>
+      </svg>
+    </div>
+    <h1 class="boot-title">NikhilOS</h1>
+    <div class="boot-build">KERNEL AI-CORE v9001 · BUILD 2026.04 · SECURE</div>
+    <div class="boot-log-box">
+      <div class="boot-log" id="boot-log"></div>
+    </div>
+    <div class="boot-bar-wrap">
+      <div class="boot-bar-track">
+        <div class="boot-bar-fill" id="boot-bar"></div>
+      </div>
+      <span class="boot-pct" id="boot-pct">0%</span>
+    </div>
+  </div>
+</div>
+
+<!-- ====== OS SHELL ====== -->
+<div id="shell" class="shell-hidden">
+
+  <!-- AMBIENT BG -->
+  <div class="ambient-layer">
+    <canvas id="bg-canvas"></canvas>
+    <div class="aurora">
+      <div class="ab ab1"></div>
+      <div class="ab ab2"></div>
+      <div class="ab ab3"></div>
+    </div>
+    <div class="grid-overlay"></div>
+    <div class="crt-lines"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-brand" onclick="navigate('home')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M12 1L22 6.5V17.5L12 23L2 17.5V6.5L12 1Z" stroke="#00f0ff" stroke-width="1.5" fill="rgba(0,240,255,0.08)"/>
+      </svg>
+      <span class="nb-name">NikhilOS</span>
+      <span class="nb-ver">v2026</span>
+    </div>
+    <ul class="nav-list" id="nav-list">
+      <li class="ni active" data-s="home">Dashboard</li>
+      <li class="ni" data-s="about">System Info</li>
+      <li class="ni" data-s="projects">Modules</li>
+      <li class="ni" data-s="achievements">Achievements</li>
+      <li class="ni" data-s="skills">Capabilities</li>
+      <li class="ni" data-s="logs">Activity Logs</li>
+    </ul>
+    <div class="nav-right">
+      <div class="nr-clock" id="nr-clock">--:--:--</div>
+      <div class="nr-status"><span class="pulse-dot"></span><span>ONLINE</span></div>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE DRAWER -->
+  <div class="drawer" id="drawer">
+    <ul>
+      <li onclick="navigate('home')">Dashboard</li>
+      <li onclick="navigate('about')">System Info</li>
+      <li onclick="navigate('projects')">Modules</li>
+      <li onclick="navigate('achievements')">Achievements</li>
+      <li onclick="navigate('skills')">Capabilities</li>
+      <li onclick="navigate('logs')">Activity Logs</li>
+    </ul>
+  </div>
+  <div class="drawer-backdrop" id="drawer-backdrop" onclick="closeDrawer()"></div>
+
+  <!-- MAIN -->
+  <main id="main">
+
+    <!-- ===== HOME ===== -->
+    <section id="home" class="section s-active">
+      <div class="container">
+        <div class="hero">
+          <div class="hero-left">
+            <div class="hero-badge">
+              <span class="hb-dot"></span>
+              <span>System Online · NikhilOS v2026</span>
+            </div>
+            <h1 class="hero-name">
+              <span class="hn-line1">NIKHIL</span>
+              <span class="hn-line2">RAJ</span>
+            </h1>
+            <div class="hero-role">
+              <span class="hr-bracket">[</span>
+              <span class="hr-text">AI + Tech Creator</span>
+              <span class="hr-bracket">]</span>
+            </div>
+            <div class="hero-typed">
+              <span class="hty-arrow">❯</span>
+              <span id="typed" class="hty-text"></span>
+              <span class="hty-cur">▮</span>
+            </div>
+            <p class="hero-desc">Engineering intelligent systems. Building cybersecurity infrastructure. Creating AI-powered experiences that define tomorrow.</p>
+            <div class="hero-btns">
+              <button class="btn-primary ripple-el" onclick="navigate('projects')">
+                View Modules <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </button>
+              <button class="btn-ghost ripple-el" onclick="navigate('about')">System Info</button>
+            </div>
+            <div class="hero-metrics">
+              <div class="hm-item">
+                <div class="hm-val" data-target="4">0</div>
+                <div class="hm-label">AI Modules</div>
+              </div>
+              <div class="hm-div"></div>
+              <div class="hm-item">
+                <div class="hm-val" data-target="2">0</div>
+                <div class="hm-label">Awards</div>
+              </div>
+              <div class="hm-div"></div>
+              <div class="hm-item">
+                <div class="hm-val" data-target="4">0</div>
+                <div class="hm-label">Yrs Design</div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-right">
+            <div class="orb-scene">
+              <div class="orb-orbit o1"><div class="orb-sat">🛡️</div></div>
+              <div class="orb-orbit o2"><div class="orb-sat">🧠</div></div>
+              <div class="orb-orbit o3"><div class="orb-sat">🔐</div></div>
+              <div class="orb-core">
+                <div class="oc-pulse"></div>
+                <div class="oc-glow"></div>
+                <div class="oc-label">AI</div>
+                <div class="oc-sub">CORE</div>
+              </div>
+              <div class="chip c1">Python</div>
+              <div class="chip c2">Flask</div>
+              <div class="chip c3">TensorFlow</div>
+              <div class="chip c4">React</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="sec-hdr">
+          <span class="sec-tag">SYS_INFO · MODULE_02</span>
+          <h2 class="sec-title">System Information</h2>
+          <div class="sec-line"></div>
+        </div>
+        <div class="about-grid">
+          <div class="about-id glass-card tilt-card">
+            <div class="aid-avatar">
+              <div class="ava-ring r-out"></div>
+              <div class="ava-ring r-in"></div>
+              <div class="ava-core">NR</div>
+            </div>
+            <div class="aid-online"><span class="pulse-dot"></span> ONLINE · 2026</div>
+            <h3 class="aid-name">Nikhil Raj</h3>
+            <p class="aid-role">AI + Tech Creator</p>
+            <div class="aid-tags">
+              <span class="atag">B.Tech Student</span>
+              <span class="atag">AI Engineer</span>
+              <span class="atag">Cybersecurity</span>
+              <span class="atag t-green">Content Creator</span>
+              <span class="atag t-purple">Graphic Designer</span>
+            </div>
+            <div class="aid-socials">
+              <a href="https://github.com/Nikhil5686" target="_blank" rel="noopener noreferrer" class="solink" id="sl-github" aria-label="GitHub">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/in/nikhil-raj-4707603a3/" target="_blank" rel="noopener noreferrer" class="solink" id="sl-linkedin" aria-label="LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+              <a href="#" class="solink" id="sl-twitter" aria-label="Twitter/X">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="about-specs glass-card">
+            <div class="panel-hdr"><span class="ph-b">〈</span> SYSTEM SPECS <span class="ph-b">〉</span></div>
+            <div class="spec-rows">
+              <div class="sr"><span class="sk">DESIGNATION</span><span class="sv">B.Tech Engineering Student</span></div>
+              <div class="sr"><span class="sk">PRIMARY_CORE</span><span class="sv sv-cyan">Artificial Intelligence & ML</span></div>
+              <div class="sr"><span class="sk">SECONDARY_CORE</span><span class="sv">Cybersecurity & Threat Analysis</span></div>
+              <div class="sr"><span class="sk">CONTENT_MODULE</span><span class="sv">AI-focused Tech Content Creator</span></div>
+              <div class="sr"><span class="sk">DESIGN_EXP</span><span class="sv sv-purple">4+ Years Graphic Design</span></div>
+              <div class="sr"><span class="sk">BUILD_STATUS</span><span class="sv sv-green">Actively Building · 2026</span></div>
+              <div class="sr"><span class="sk">MISSION</span><span class="sv sv-mission">Build AI systems that matter</span></div>
+            </div>
+          </div>
+          <div class="about-bio glass-card">
+            <div class="term-bar">
+              <span class="tbd r"></span><span class="tbd y"></span><span class="tbd g"></span>
+              <span class="tb-title">about.md — nikhilraj</span>
+            </div>
+            <div class="bio-body">
+              <p class="bio-cmt"># About Nikhil Raj</p><br>
+              <p>I'm a <span class="hl cyan">B.Tech student</span> with a deep focus on building <span class="hl purple">intelligent systems</span> that solve real-world problems.</p><br>
+              <p>My work spans <span class="hl cyan">AI development</span>, <span class="hl">cybersecurity engineering</span>, and creating immersive <span class="hl green">tech content</span> that demystifies the future of technology.</p><br>
+              <p>I don't just write code — I architect <span class="hl green">experiences</span>. Every project carries the same mission: <span class="hl purple">make technology feel alive.</span></p><br>
+              <p class="bio-cmt"># Status: Always building ▮</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="sec-hdr">
+          <span class="sec-tag">MODULES_REGISTRY · MODULE_03</span>
+          <h2 class="sec-title">System Modules</h2>
+          <div class="sec-line"></div>
+        </div>
+        <div class="modules-layout">
+          <!-- FLAGSHIP -->
+          <div class="flagship glass-card tilt-card" id="mod-rakshak">
+            <div class="fs-left">
+              <div class="fs-badge"><span class="pulse-dot"></span> FLAGSHIP SYSTEM</div>
+              <div class="fs-id">MOD_001</div>
+              <div class="fs-icon">🛡️</div>
+              <h3 class="fs-name">Rakshak AI</h3>
+              <p class="fs-desc">Advanced autonomous security intelligence system. Real-time threat detection, behavioral anomaly analysis, and automated response powered by deep neural networks.</p>
+              <div class="fs-tags">
+                <span>AI</span><span>Security</span><span>Deep Learning</span><span>Autonomous</span><span>Python</span>
+              </div>
+              <div class="fs-footer">
+                <button class="btn-primary sm ripple-el">View Module →</button>
+                <div class="fs-meta">
+                  <span>🔥 Flagship</span>
+                  <span>⚡ Active</span>
+                </div>
+              </div>
+            </div>
+            <div class="fs-right">
+              <div class="fs-screen">
+                <div class="fss-bar"><span></span><span></span><span></span></div>
+                <div class="fss-body" id="rakshak-term"></div>
+              </div>
+              <div class="fs-ring-stat">
+                <div class="frs-wrap">
+                  <svg class="frs-svg" viewBox="0 0 80 80">
+                    <circle cx="40" cy="40" r="34" class="frs-track"/>
+                    <circle cx="40" cy="40" r="34" class="frs-fill" id="rakshak-ring"/>
+                  </svg>
+                  <span class="frs-val">88%</span>
+                </div>
+                <span class="frs-label">Threat Score</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- GRID -->
+          <div class="mods-grid">
+            <div class="mod glass-card tilt-card" id="mod-securechat">
+              <div class="mod-top"><span class="mod-id">MOD_002</span><span class="mod-st blue-st"><span class="pulse-dot blue-dot"></span>SECURE</span></div>
+              <div class="mod-icon">🔐</div>
+              <h3 class="mod-name">SecureChat</h3>
+              <p class="mod-desc">End-to-end encrypted communication with AI anomaly detection and quantum-resistant architecture.</p>
+              <div class="mod-tags"><span class="mt b">E2E Encrypt</span><span class="mt b">AI Detection</span><span class="mt b">Zero-Knowledge</span></div>
+              <div class="mod-bar-row"><div class="mod-track"><div class="mod-fill mf-b" data-w="95"></div></div><span>95%</span></div>
+              <button class="mod-btn mb-b ripple-el">Explore →</button>
+            </div>
+            <div class="mod glass-card tilt-card" id="mod-branchiq">
+              <div class="mod-top"><span class="mod-id">MOD_003</span><span class="mod-st purple-st"><span class="pulse-dot purple-dot"></span>DEPLOYED</span></div>
+              <div class="mod-icon">🧬</div>
+              <h3 class="mod-name">BranchIQ</h3>
+              <p class="mod-desc">AI-powered academic intelligence. Multilingual voice interface, smart exam prep, real-time guidance.</p>
+              <div class="mod-tags"><span class="mt p">EdTech</span><span class="mt p">Voice AI</span><span class="mt p">Multilingual</span></div>
+              <div class="mod-bar-row"><div class="mod-track"><div class="mod-fill mf-p" data-w="91"></div></div><span>91%</span></div>
+              <button class="mod-btn mb-p ripple-el">Explore →</button>
+            </div>
+            <div class="mod glass-card tilt-card" id="mod-dosewiz">
+              <div class="mod-top"><span class="mod-id">MOD_004</span><span class="mod-st orange-st"><span class="pulse-dot orange-dot"></span>ACTIVE</span></div>
+              <div class="mod-icon">💊</div>
+              <h3 class="mod-name">DoseWiz</h3>
+              <p class="mod-desc">Precision medical dosage engine. AI-verified drug interaction analysis with patient profile management.</p>
+              <div class="mod-tags"><span class="mt o">MedTech</span><span class="mt o">AI Safety</span><span class="mt o">Clinical</span></div>
+              <div class="mod-bar-row"><div class="mod-track"><div class="mod-fill mf-o" data-w="99"></div></div><span>99%</span></div>
+              <button class="mod-btn mb-o ripple-el">Explore →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ACHIEVEMENTS ===== -->
+    <section id="achievements" class="section">
+      <div class="container">
+        <div class="sec-hdr">
+          <span class="sec-tag">ACHIEVEMENT_LOG · MODULE_04</span>
+          <h2 class="sec-title">System Achievements</h2>
+          <div class="sec-line"></div>
+        </div>
+        <div class="timeline">
+          <div class="tl-track">
+
+            <div class="tl-item" id="ach-1">
+              <div class="tl-node"><div class="tln-inner">🏅</div></div>
+              <div class="tl-card glass-card tilt-card">
+                <div class="tlc-top"><span class="tlc-tag">ACHIEVEMENT UNLOCKED</span><span class="tlc-year">2026</span></div>
+                <h3 class="tlc-title">Institute Winner</h3>
+                <div class="tlc-meta">
+                  <span class="tlcm gold">🥇 1st Place</span>
+                  <span class="tlcm">Institute Level</span>
+                  <span class="tlcm green">✓ Verified</span>
+                </div>
+                <p class="tlc-desc">Recognized as Institute Winner for outstanding technical innovation and academic excellence, demonstrating leadership in AI application development.</p>
+                <div class="tlc-pills"><span>AI Innovation</span><span>Technical Excellence</span><span>Leadership</span></div>
+              </div>
+            </div>
+
+            <div class="tl-connector"></div>
+
+            <div class="tl-item" id="ach-2">
+              <div class="tl-node"><div class="tln-inner">🥈</div></div>
+              <div class="tl-card glass-card tilt-card">
+                <div class="tlc-top"><span class="tlc-tag">ACHIEVEMENT UNLOCKED</span><span class="tlc-year">2026</span></div>
+                <h3 class="tlc-title">University Tech Expo</h3>
+                <div class="tlc-meta">
+                  <span class="tlcm">🥈 1st Runner-Up</span>
+                  <span class="tlcm">University Level</span>
+                  <span class="tlcm green">✓ Verified</span>
+                </div>
+                <p class="tlc-desc">Secured 1st Runner-Up at the University Tech Expo 2026, presenting an AI-driven project that impressed industry experts and faculty judges.</p>
+                <div class="tlc-pills"><span>Innovation</span><span>Presentation</span><span>Engineering</span></div>
+              </div>
+            </div>
+
+            <div class="tl-connector dashed"></div>
+
+            <div class="tl-item locked-item" id="ach-future">
+              <div class="tl-node locked-node"><div class="tln-inner">🔒</div></div>
+              <div class="tl-card glass-card locked-card">
+                <div class="tlc-top"><span class="tlc-tag dim-tag">LOCKED</span><span class="tlc-year dim-year">????</span></div>
+                <h3 class="tlc-title dim-title">Next Achievement</h3>
+                <p class="tlc-desc dim-desc">The next chapter is being written. New milestones incoming. Stay tuned.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section id="skills" class="section">
+      <div class="container">
+        <div class="sec-hdr">
+          <span class="sec-tag">CAPABILITIES_MATRIX · MODULE_05</span>
+          <h2 class="sec-title">System Capabilities</h2>
+          <div class="sec-line"></div>
+        </div>
+        <div class="skills-layout">
+          <div class="skills-bars">
+            <div class="sk-item"><div class="ski-hdr"><span>🧠</span><span class="ski-name">AI Development</span><span class="ski-pct">90%</span></div><div class="ski-track"><div class="ski-fill sf-cyan" data-w="90"></div></div></div>
+            <div class="sk-item"><div class="ski-hdr"><span>🔐</span><span class="ski-name">Cybersecurity</span><span class="ski-pct">82%</span></div><div class="ski-track"><div class="ski-fill sf-blue" data-w="82"></div></div></div>
+            <div class="sk-item"><div class="ski-hdr"><span>📱</span><span class="ski-name">App Development</span><span class="ski-pct">85%</span></div><div class="ski-track"><div class="ski-fill sf-purple" data-w="85"></div></div></div>
+            <div class="sk-item"><div class="ski-hdr"><span>🎨</span><span class="ski-name">Graphic Design</span><span class="ski-pct">88%</span></div><div class="ski-track"><div class="ski-fill sf-orange" data-w="88"></div></div></div>
+            <div class="sk-item"><div class="ski-hdr"><span>📡</span><span class="ski-name">Content Creation</span><span class="ski-pct">80%</span></div><div class="ski-track"><div class="ski-fill sf-green" data-w="80"></div></div></div>
+            <div class="sk-item"><div class="ski-hdr"><span>🔬</span><span class="ski-name">AI Research</span><span class="ski-pct">75%</span></div><div class="ski-track"><div class="ski-fill sf-pink" data-w="75"></div></div></div>
+          </div>
+          <div class="skills-right">
+            <div class="radar-card glass-card">
+              <div class="panel-hdr"><span class="ph-b">〈</span> CORE MATRIX <span class="ph-b">〉</span></div>
+              <canvas id="radar-canvas" width="260" height="260"></canvas>
+            </div>
+            <div class="tech-card glass-card">
+              <div class="panel-hdr"><span class="ph-b">〈</span> TECH STACK <span class="ph-b">〉</span></div>
+              <div class="tech-tags">
+                <span class="tt py">Python</span><span class="tt js">JavaScript</span><span class="tt re">React</span>
+                <span class="tt fl">Flask</span><span class="tt tf">TensorFlow</span><span class="tt no">Node.js</span>
+                <span class="tt mo">MongoDB</span><span class="tt ai">OpenAI API</span><span class="tt fi">Figma</span>
+                <span class="tt gi">Git</span><span class="tt do">Docker</span><span class="tt li">Linux</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LOGS ===== -->
+    <section id="logs" class="section">
+      <div class="container">
+        <div class="sec-hdr">
+          <span class="sec-tag">ACTIVITY_FEED · MODULE_06</span>
+          <h2 class="sec-title">Activity Logs</h2>
+          <div class="sec-line"></div>
+        </div>
+        <div class="logs-layout">
+          <div class="log-term glass-card">
+            <div class="term-bar">
+              <span class="tbd r"></span><span class="tbd y"></span><span class="tbd g"></span>
+              <span class="tb-title">activity_log.sys — LIVE FEED</span>
+              <div class="live-pill"><span class="pulse-dot"></span> LIVE</div>
+            </div>
+            <div class="log-scroll" id="log-scroll"></div>
+          </div>
+          <div class="content-mods">
+            <div class="cm glass-card tilt-card" id="cm-reels">
+              <div class="cm-icon">🎬</div>
+              <h3>AI Reels</h3>
+              <p>Short-form AI content — complex concepts made viral and digestible.</p>
+              <div class="cm-st orange-st2"><span class="pulse-dot orange-dot"></span> UPLOADING SOON</div>
+            </div>
+            <div class="cm glass-card tilt-card" id="cm-tutorials">
+              <div class="cm-icon">💡</div>
+              <h3>Tech Tutorials</h3>
+              <p>Deep-dive build logs, walkthroughs, and step-by-step dev guides.</p>
+              <div class="cm-st orange-st2"><span class="pulse-dot orange-dot"></span> IN PRODUCTION</div>
+            </div>
+            <div class="cm glass-card tilt-card" id="cm-journey">
+              <div class="cm-icon">🚀</div>
+              <h3>Learning Journey</h3>
+              <p>From student to AI creator — raw, honest, and constantly evolving.</p>
+              <div class="cm-st green-st2"><span class="pulse-dot"></span> ONGOING</div>
+            </div>
+            <div class="cm glass-card tilt-card" id="cm-tools">
+              <div class="cm-icon">🛠️</div>
+              <h3>AI Tools</h3>
+              <p>Standalone AI utilities, open-source libraries, and API tools.</p>
+              <div class="cm-st purple-st2"><span class="pulse-dot purple-dot"></span> PLANNED</div>
+            </div>
+          </div>
+        </div>
+        <div class="future-strip glass-card">
+          <div class="fs-icon">⬡</div>
+          <div class="fs-text">
+            <h3>Future-Ready Architecture</h3>
+            <p>NikhilOS is modular and extensible. New sections integrate seamlessly as the system scales.</p>
+          </div>
+          <div class="fs-modules">
+            <span>[ AI Tools ] PLANNED</span>
+            <span>[ Blog ] PLANNED</span>
+            <span>[ Products ] PLANNED</span>
+            <span>[ APIs ] PLANNED</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="fi-brand">NikhilOS <span class="fi-ver">v2026.04</span></span>
+      <span class="fi-copy">Crafted by <span class="hl cyan">Nikhil Raj</span> · AI + Tech Creator</span>
+      <span class="fi-status"><span class="pulse-dot"></span> All Systems Operational</span>
+    </div>
+  </footer>
+
+</div><!-- /shell -->
+
+<script src="scripts/main.js"></script>
+</body>
+</html>
