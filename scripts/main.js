@@ -1,20 +1,21 @@
 'use strict';
-/*  NikhilOS — JavaScript Engine v2
-    Boot · Cursor · Navigation · Tilt · Typewriter · Canvas · Radar · Ripple  */
+/*  NikhilOS — JavaScript Engine v3
+    Cinematic AI Robotics Portfolio
+    Boot · Cursor · Navigation · Magnetic · Hex Grid · SVG Animation  */
 
 /* ============================================================
    1. BOOT SEQUENCE
    ============================================================ */
 const BOOT_LINES = [
   '[  0.001] Kernel AI-Core v9001 initializing...',
-  '[  0.043] Memory map: 16384 MB DRAM OK',
-  '[  0.112] Neural interface: ONLINE',
-  '[  0.203] Cybersecurity module: ACTIVE',
-  '[  0.315] Loading identity layer: nikhilraj',
-  '[  0.440] Mounting project registry: 4 modules found',
-  '[  0.580] Achievement log: 2 records unlocked',
-  '[  0.700] Skills matrix calibrated: 6 cores',
-  '[  0.850] Content module: READY',
+  '[  0.043] Hardware interface: NEURAL_LINK OK',
+  '[  0.112] Motor control node: STANDBY',
+  '[  0.203] Cybersecurity protocol: ZERO_TRUST ACTIVE',
+  '[  0.315] Loading identity layer: nikhilraj.sys',
+  '[  0.440] Mounting mission archive: 4 deployed systems found',
+  '[  0.580] Calibrating telemetry sensors...',
+  '[  0.700] Capability matrix initialized: 6 operational domains',
+  '[  0.850] Handshake secure. Encryption E2E verified.',
   '[  0.999] ▶ NikhilOS — System booted successfully'
 ];
 
@@ -28,7 +29,7 @@ function runBoot() {
     setTimeout(() => {
       const line = document.createElement('div');
       line.className = 'bl-line';
-      line.textContent = msg;
+      line.innerHTML = `<span>[SYS]</span> ${msg}`;
       logEl.appendChild(line);
       logEl.scrollTop = logEl.scrollHeight;
       const pct = Math.round(((i + 1) / total) * 100);
@@ -42,8 +43,8 @@ function runBoot() {
     const shell = document.getElementById('shell');
     boot.classList.add('boot-exit');
     shell.classList.remove('shell-hidden');
-    setTimeout(() => { boot.style.display = 'none'; startOS(); }, 900);
-  }, total * 160 + 500);
+    setTimeout(() => { boot.style.display = 'none'; startOS(); }, 800);
+  }, total * 160 + 400);
 }
 
 /* ============================================================
@@ -53,25 +54,22 @@ function initCursor() {
   const dot  = document.getElementById('cx-dot');
   const ring = document.getElementById('cx-ring');
   if (!dot || !ring) return;
-  let mx = 0, my = 0, rx = 0, ry = 0;
+  let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+  let rx = mx, ry = my;
 
   document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-  dot.style.left = '0px'; dot.style.top = '0px';
-  ring.style.left = '0px'; ring.style.top = '0px';
 
   function animCursor() {
     dot.style.left  = mx + 'px';
     dot.style.top   = my + 'px';
-    rx += (mx - rx) * 0.14;
-    ry += (my - ry) * 0.14;
+    rx += (mx - rx) * 0.15;
+    ry += (my - ry) * 0.15;
     ring.style.left = rx + 'px';
     ring.style.top  = ry + 'px';
     requestAnimationFrame(animCursor);
   }
   animCursor();
 
-  // Hide ring on leave
   document.addEventListener('mouseleave', () => { dot.style.opacity='0'; ring.style.opacity='0'; });
   document.addEventListener('mouseenter', () => { dot.style.opacity='1'; ring.style.opacity='1'; });
 }
@@ -81,8 +79,11 @@ function initCursor() {
    ============================================================ */
 function startClock() {
   const el = document.getElementById('nr-clock');
-  const tick = () => { el.textContent = new Date().toLocaleTimeString('en-GB',{hour12:false}); };
-  tick(); setInterval(tick, 1000);
+  const tick = () => {
+    const now = new Date();
+    el.textContent = now.toLocaleTimeString('en-GB', { hour12: false }) + '.' + Math.floor(now.getMilliseconds()/100);
+  };
+  tick(); setInterval(tick, 100);
 }
 
 /* ============================================================
@@ -97,39 +98,34 @@ function navigate(id) {
   if (!prev || !next) return;
 
   prev.classList.remove('s-active');
-  prev.style.display = 'none';
+  setTimeout(() => prev.style.display = 'none', 400);
+
   currentSection = id;
-
+  
   next.style.display = 'block';
-  next.classList.add('s-active');
+  // Small delay to ensure display:block applies before animation class
+  requestAnimationFrame(() => {
+    next.classList.add('s-active');
+  });
 
-  // Update nav
   document.querySelectorAll('.ni').forEach(n => {
     n.classList.toggle('active', n.dataset.s === id);
   });
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
   onSectionEnter(id);
-
-  // Close drawer if open
   closeDrawer();
 }
 
 function onSectionEnter(id) {
-  if (id === 'home')         { startTyping(); animateCounters(); }
-  if (id === 'skills')       { animateSkillBars(); drawRadar(); }
-  if (id === 'projects')     { animateModBars(); startRakshakTerminal(); animateRing(); }
-  if (id === 'achievements') { /* subtle entrance handled by CSS */ }
+  if (id === 'home')     { startTyping(); animateCounters(); }
+  if (id === 'projects') { startRakshakTerminal(); initRakshakArchDiagram(); }
+  // other sections have scroll reveals
 }
 
-// Wire nav items
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.ni').forEach(item => {
     item.addEventListener('click', () => navigate(item.dataset.s));
-  });
-  // Keyboard support
-  document.querySelectorAll('.ni').forEach(item => {
-    item.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' ') navigate(item.dataset.s); });
   });
 });
 
@@ -140,34 +136,28 @@ function openDrawer() {
   document.getElementById('drawer').classList.add('open');
   document.getElementById('drawer-backdrop').classList.add('show');
   document.getElementById('burger').classList.add('open');
-  document.getElementById('burger').setAttribute('aria-expanded','true');
 }
 function closeDrawer() {
   document.getElementById('drawer').classList.remove('open');
   document.getElementById('drawer-backdrop').classList.remove('show');
   document.getElementById('burger').classList.remove('open');
-  document.getElementById('burger').setAttribute('aria-expanded','false');
 }
 document.addEventListener('DOMContentLoaded', () => {
   const burger = document.getElementById('burger');
   if (burger) burger.addEventListener('click', () => {
     burger.classList.contains('open') ? closeDrawer() : openDrawer();
   });
-  // Drawer nav
-  document.querySelectorAll('.drawer li').forEach(li => {
-    li.addEventListener('click', closeDrawer);
-  });
 });
 
 /* ============================================================
-   6. TYPEWRITER — CYCLING PHRASES
+   6. TYPEWRITER
    ============================================================ */
 const PHRASES = [
-  'Building AI systems that matter',
-  'Engineering cybersecurity solutions',
-  'Architecting intelligent experiences',
-  'Creating next-gen tech content',
-  'Turning ideas into live systems',
+  'Building autonomous intelligent agents.',
+  'Engineering zero-trust secure infrastructure.',
+  'Bridging neural logic with physical movement.',
+  'Architecting resilient edge systems.',
+  'Code that acts in the real world.'
 ];
 let phraseIdx = 0, charIdx = 0, isDeleting = false, typingTimer;
 
@@ -189,9 +179,9 @@ function typeStep() {
     charIdx++;
     if (charIdx === phrase.length) {
       isDeleting = true;
-      typingTimer = setTimeout(typeStep, 1800);
+      typingTimer = setTimeout(typeStep, 2000);
     } else {
-      typingTimer = setTimeout(typeStep, 55);
+      typingTimer = setTimeout(typeStep, 45);
     }
   } else {
     el.textContent = phrase.slice(0, charIdx - 1);
@@ -199,9 +189,9 @@ function typeStep() {
     if (charIdx === 0) {
       isDeleting = false;
       phraseIdx = (phraseIdx + 1) % PHRASES.length;
-      typingTimer = setTimeout(typeStep, 400);
+      typingTimer = setTimeout(typeStep, 500);
     } else {
-      typingTimer = setTimeout(typeStep, 28);
+      typingTimer = setTimeout(typeStep, 20);
     }
   }
 }
@@ -213,17 +203,43 @@ function animateCounters() {
   document.querySelectorAll('.hm-val[data-target]').forEach(el => {
     const target = parseInt(el.dataset.target);
     let val = 0;
+    const dur = 1500;
+    const steps = 60;
+    const inc = target / steps;
+    const stepTime = dur / steps;
+    
     const step = () => {
-      val++;
-      el.textContent = val;
-      if (val < target) setTimeout(step, 120);
+      val += inc;
+      if (val >= target) {
+        el.textContent = target;
+      } else {
+        el.textContent = Math.floor(val);
+        setTimeout(step, stepTime);
+      }
     };
     step();
   });
 }
 
 /* ============================================================
-   8. 3D CARD TILT
+   8. MAGNETIC BUTTONS (Premium Feel)
+   ============================================================ */
+function initMagneticButtons() {
+  document.querySelectorAll('.magnetic-btn').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = 'translate(0px, 0px)';
+    });
+  });
+}
+
+/* ============================================================
+   9. 3D CARD TILT
    ============================================================ */
 function initTilt() {
   document.querySelectorAll('.tilt-card').forEach(card => {
@@ -233,20 +249,18 @@ function initTilt() {
       const cy = rect.top  + rect.height / 2;
       const dx = (e.clientX - cx) / (rect.width  / 2);
       const dy = (e.clientY - cy) / (rect.height / 2);
-      const rotY = dx * 10;
-      const rotX = -dy * 10;
-      card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.01)`;
+      const rotY = dx * 8;
+      const rotX = -dy * 8;
+      card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02, 1.02, 1.02)`;
     });
     card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
-      card.style.transition = 'transform 0.5s ease';
+      card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
     });
-    card.addEventListener('mouseenter', () => { card.style.transition = 'none'; });
   });
 }
 
 /* ============================================================
-   9. RIPPLE EFFECT
+   10. RIPPLE EFFECT
    ============================================================ */
 function initRipple() {
   document.querySelectorAll('.ripple-el').forEach(el => {
@@ -265,25 +279,15 @@ function initRipple() {
 }
 
 /* ============================================================
-   10. MODULE BARS ANIMATION
-   ============================================================ */
-function animateModBars() {
-  document.querySelectorAll('.mod-fill[data-w]').forEach(fill => {
-    fill.style.width = '0';
-    setTimeout(() => { fill.style.width = fill.dataset.w + '%'; }, 200);
-  });
-}
-
-/* ============================================================
-   11. RAKSHAK AI TERMINAL
+   11. RAKSHAK AI TERMINAL & SVG DIAGRAM
    ============================================================ */
 const RAKSHAK_LINES = [
-  { color: 'l-green',  text: '▶ threat_scan --realtime --deep' },
-  { color: 'l-cyan',   text: '█ Initializing neural engine...' },
-  { color: 'l-green',  text: '✓ Model v3.1 loaded — 88% confidence' },
-  { color: 'l-cyan',   text: '█ Scanning behavioral patterns...' },
-  { color: 'l-green',  text: '✓ 0 anomalies detected' },
-  { color: 'l-purple', text: '▶ status: SYSTEM PROTECTED ▮' },
+  { color: 'l-green',  text: '▶ sys.init(defense_node_01)' },
+  { color: 'l-cyan',   text: '█ Loading spatial awareness model...' },
+  { color: 'l-green',  text: '✓ Inference engine online — 12ms latency' },
+  { color: 'l-cyan',   text: '█ Calibrating LiDAR and IR streams...' },
+  { color: 'l-green',  text: '✓ Environment mapped. Zero anomalies.' },
+  { color: 'l-purple', text: '▶ status: AUTONOMOUS OVERWATCH ▮' },
 ];
 
 function startRakshakTerminal() {
@@ -296,123 +300,143 @@ function startRakshakTerminal() {
       div.className = 'fss-seq-line';
       div.innerHTML = `<span class="${ln.color}">${ln.text}</span>`;
       body.appendChild(div);
-    }, i * 500);
+    }, i * 600);
   });
 }
 
-/* ============================================================
-   12. RING CHART ANIMATION (Rakshak)
-   ============================================================ */
-function animateRing() {
-  const ring = document.getElementById('rakshak-ring');
-  if (!ring) return;
-  // circumference = 2*PI*34 ≈ 213.6
-  const circ = 213.6;
-  const pct  = 88 / 100;
-  ring.style.strokeDashoffset = circ;
-  setTimeout(() => {
-    ring.style.transition = 'stroke-dashoffset 1.5s ease';
-    ring.style.strokeDashoffset = circ - (circ * pct);
-  }, 300);
+function initRakshakArchDiagram() {
+  // Re-trigger path animations
+  const paths = document.querySelectorAll('.arch-path');
+  paths.forEach(p => {
+    p.style.animation = 'none';
+    p.offsetHeight; // trigger reflow
+    p.style.animation = null;
+  });
 
-  // Add gradient defs to SVG
-  const svg = ring.closest('svg');
-  if (svg && !svg.querySelector('defs')) {
-    const defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
-    defs.innerHTML = `<linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00f0ff"/>
-      <stop offset="100%" stop-color="#8b5cf6"/>
-    </linearGradient>`;
-    svg.insertBefore(defs, svg.firstChild);
+  // Particle animation along paths
+  const p1 = document.getElementById('particle1');
+  const p2 = document.getElementById('particle2');
+  if(!p1 || !p2) return;
+
+  let start = performance.now();
+  function animateParticles(time) {
+    const elapsed = time - start;
+    const cycle = 3000;
+    const progress = (elapsed % cycle) / cycle;
+
+    // Path 1 approx coords: M 80 50 L 95 50 L 95 100 L 115 100
+    if(progress < 0.5) {
+      p1.setAttribute('opacity', '1');
+      let x, y;
+      const p = progress * 2; // 0 to 1
+      if(p < 0.33) { x = 80 + (15 * (p/0.33)); y = 50; }
+      else if(p < 0.66) { x = 95; y = 50 + (50 * ((p-0.33)/0.33)); }
+      else { x = 95 + (20 * ((p-0.66)/0.34)); y = 100; }
+      p1.setAttribute('cx', x);
+      p1.setAttribute('cy', y);
+    } else { p1.setAttribute('opacity', '0'); }
+
+    // Path 2 approx coords: M 185 100 L 205 100 L 205 50 L 220 50
+    if(progress > 0.5) {
+      p2.setAttribute('opacity', '1');
+      let x, y;
+      const p = (progress - 0.5) * 2; // 0 to 1
+      if(p < 0.33) { x = 185 + (20 * (p/0.33)); y = 100; }
+      else if(p < 0.66) { x = 205; y = 100 - (50 * ((p-0.33)/0.33)); }
+      else { x = 205 + (15 * ((p-0.66)/0.34)); y = 50; }
+      p2.setAttribute('cx', x);
+      p2.setAttribute('cy', y);
+    } else { p2.setAttribute('opacity', '0'); }
+
+    requestAnimationFrame(animateParticles);
   }
+  requestAnimationFrame(animateParticles);
 }
 
 /* ============================================================
-   13. SKILL BARS ANIMATION
-   ============================================================ */
-function animateSkillBars() {
-  document.querySelectorAll('.ski-fill[data-w]').forEach(fill => {
-    fill.style.width = '0';
-    setTimeout(() => { fill.style.width = fill.dataset.w + '%'; }, 150);
-  });
-}
+   12. CAPABILITY MATRIX (Hex Grid Interaction)
+   ============================================ */
+const DOMAIN_DATA = {
+  ai: {
+    title: 'Neural Architectures & ML',
+    desc: 'Designing and deploying deep learning models, focusing on edge inference and real-time processing. Experience with custom model architectures for specific physical-world tasks.',
+    tags: ['TensorFlow', 'PyTorch', 'TensorRT', 'Edge TPU', 'ONNX']
+  },
+  robotics: {
+    title: 'Robotic Integration',
+    desc: 'Bridging the gap between software and hardware. Building control loops, processing sensor telemetry, and orchestrating complex movement logic.',
+    tags: ['ROS2', 'C++', 'Python', 'Kinematics', 'Sensor Fusion']
+  },
+  cyber: {
+    title: 'Zero-Trust Security',
+    desc: 'Architecting secure communication channels for IoT and robotic nodes. Implementing end-to-end encryption, anomaly detection, and secure key exchanges.',
+    tags: ['Cryptography', 'Network Security', 'Penetration Testing', 'AES/RSA']
+  },
+  core: {
+    title: 'Systems Engineering',
+    desc: 'The glue that holds everything together. Designing the high-level architecture, ensuring fault tolerance, and managing the lifecycle of complex, multi-layered systems.',
+    tags: ['System Design', 'Linux Kernel', 'Docker', 'CI/CD', 'Architecture']
+  },
+  backend: {
+    title: 'Distributed Backend',
+    desc: 'Building scalable, high-throughput server infrastructures to handle massive streams of telemetry data, coordinate multi-agent systems, and serve intelligent APIs.',
+    tags: ['Node.js', 'Go', 'PostgreSQL', 'Redis', 'WebSockets', 'gRPC']
+  },
+  vision: {
+    title: 'Computer Vision',
+    desc: 'Extracting semantic meaning from pixel arrays. Implementing real-time object detection, SLAM (Simultaneous Localization and Mapping), and spatial tracking.',
+    tags: ['OpenCV', 'YOLO', 'CUDA', 'Point Clouds', 'LiDAR Data']
+  },
+  embedded: {
+    title: 'Embedded Logic',
+    desc: 'Writing highly optimized, low-level code for microcontrollers. Managing hardware interrupts, memory constraints, and direct peripheral communication.',
+    tags: ['C', 'RTOS', 'SPI/I2C/UART', 'MicroPython', 'ARM Cortex']
+  }
+};
 
-/* ============================================================
-   14. RADAR CHART (Canvas)
-   ============================================================ */
-function drawRadar() {
-  const canvas = document.getElementById('radar-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W=canvas.width, H=canvas.height, cx=W/2, cy=H/2;
-  const maxR = Math.min(W,H)/2 - 24;
-  const labels = ['AI Dev','Cybersec','App Dev','Design','Content','Research'];
-  const values = [0.90, 0.82, 0.85, 0.88, 0.80, 0.75];
-  const n = labels.length;
+function initCapabilityMatrix() {
+  const cells = document.querySelectorAll('.hex-cell');
+  const panel = document.getElementById('cap-details-panel');
+  const empty = document.querySelector('.cd-empty');
+  const content = document.querySelector('.cd-content');
+  const title = document.getElementById('cd-title');
+  const desc = document.getElementById('cd-desc');
+  const tagsContainer = document.getElementById('cd-tags');
 
-  ctx.clearRect(0,0,W,H);
-  let prog = 0;
+  cells.forEach(cell => {
+    cell.addEventListener('mouseenter', () => {
+      const domain = cell.dataset.domain;
+      if(!domain || !DOMAIN_DATA[domain]) return;
+      
+      cells.forEach(c => c.classList.remove('active'));
+      cell.classList.add('active');
 
-  function frame() {
-    ctx.clearRect(0,0,W,H);
-    const p = Math.min(1, prog);
-
-    // Grid rings
-    [0.25,0.5,0.75,1].forEach(lvl => {
-      ctx.beginPath();
-      for (let i=0;i<n;i++) {
-        const a = (Math.PI*2/n)*i - Math.PI/2;
-        const x=cx+Math.cos(a)*maxR*lvl, y=cy+Math.sin(a)*maxR*lvl;
-        i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-      }
-      ctx.closePath();
-      ctx.strokeStyle='rgba(0,240,255,0.08)'; ctx.lineWidth=1; ctx.stroke();
+      const data = DOMAIN_DATA[domain];
+      empty.classList.add('hidden');
+      content.classList.remove('hidden');
+      
+      title.textContent = data.title;
+      desc.textContent = data.desc;
+      
+      tagsContainer.innerHTML = '';
+      data.tags.forEach(tag => {
+        const span = document.createElement('span');
+        span.className = 'tt';
+        span.textContent = tag;
+        tagsContainer.appendChild(span);
+      });
+      
+      // Update panel border color based on hex
+      const style = window.getComputedStyle(cell);
+      const bg = style.backgroundColor;
+      panel.style.borderColor = bg.replace(/[^,]+(?=\))/, '0.3'); // slight opacity tweak
+      panel.style.boxShadow = `0 10px 40px ${bg.replace(/[^,]+(?=\))/, '0.1')}`;
     });
-
-    // Spokes
-    for (let i=0;i<n;i++) {
-      const a=(Math.PI*2/n)*i-Math.PI/2;
-      ctx.beginPath(); ctx.moveTo(cx,cy);
-      ctx.lineTo(cx+Math.cos(a)*maxR, cy+Math.sin(a)*maxR);
-      ctx.strokeStyle='rgba(0,240,255,0.07)'; ctx.lineWidth=1; ctx.stroke();
-    }
-
-    // Data polygon
-    ctx.beginPath();
-    for (let i=0;i<n;i++) {
-      const a=(Math.PI*2/n)*i-Math.PI/2;
-      const r=maxR*values[i]*p;
-      const x=cx+Math.cos(a)*r, y=cy+Math.sin(a)*r;
-      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-    }
-    ctx.closePath();
-    ctx.fillStyle='rgba(0,240,255,0.1)'; ctx.fill();
-    ctx.strokeStyle='#00f0ff'; ctx.lineWidth=2;
-    ctx.shadowColor='#00f0ff'; ctx.shadowBlur=10; ctx.stroke(); ctx.shadowBlur=0;
-
-    // Dots
-    for (let i=0;i<n;i++) {
-      const a=(Math.PI*2/n)*i-Math.PI/2;
-      const r=maxR*values[i]*p;
-      ctx.beginPath(); ctx.arc(cx+Math.cos(a)*r, cy+Math.sin(a)*r, 4, 0, Math.PI*2);
-      ctx.fillStyle='#00f0ff'; ctx.shadowColor='#00f0ff'; ctx.shadowBlur=8; ctx.fill(); ctx.shadowBlur=0;
-    }
-
-    // Labels
-    ctx.font='500 10px "JetBrains Mono",monospace'; ctx.fillStyle='#6b7fa8';
-    ctx.textAlign='center'; ctx.textBaseline='middle';
-    for (let i=0;i<n;i++) {
-      const a=(Math.PI*2/n)*i-Math.PI/2;
-      ctx.fillText(labels[i], cx+Math.cos(a)*(maxR+18), cy+Math.sin(a)*(maxR+18));
-    }
-
-    if (prog < 1) { prog += 0.04; requestAnimationFrame(frame); }
-  }
-  frame();
+  });
 }
 
 /* ============================================================
-   15. PARTICLE CANVAS BACKGROUND
+   13. PARTICLE CANVAS BACKGROUND
    ============================================================ */
 function initBackground() {
   const canvas = document.getElementById('bg-canvas');
@@ -428,8 +452,8 @@ function initBackground() {
     constructor() { this.reset(); }
     reset() {
       this.x=Math.random()*W; this.y=Math.random()*H;
-      this.vx=(Math.random()-0.5)*0.25; this.vy=(Math.random()-0.5)*0.25;
-      this.r=Math.random()*1.4+0.4; this.a=Math.random()*0.4+0.05;
+      this.vx=(Math.random()-0.5)*0.3; this.vy=(Math.random()-0.5)*0.3;
+      this.r=Math.random()*1.5+0.5; this.a=Math.random()*0.3+0.05;
       this.color=['#00f0ff','#8b5cf6','#10ffb0'][Math.floor(Math.random()*3)];
     }
     update() {
@@ -439,21 +463,16 @@ function initBackground() {
     draw() {
       ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
       ctx.fillStyle=this.color; ctx.globalAlpha=this.a;
-      ctx.shadowColor=this.color; ctx.shadowBlur=6; ctx.fill();
-      ctx.globalAlpha=1; ctx.shadowBlur=0;
+      ctx.fill(); ctx.globalAlpha=1;
     }
   }
 
-  for(let i=0;i<80;i++) particles.push(new P());
+  for(let i=0;i<60;i++) particles.push(new P());
 
   function loop() {
-    // Deep BG gradient
-    const g=ctx.createRadialGradient(W*.5,H*.25,0,W*.5,H*.5,H);
-    g.addColorStop(0,'rgba(8,11,24,1)'); g.addColorStop(1,'rgba(3,4,10,1)');
-    ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-
-    // Connect nearby particles
-    const maxD=100;
+    ctx.clearRect(0,0,W,H);
+    
+    const maxD=120;
     for(let i=0;i<particles.length;i++) {
       for(let j=i+1;j<particles.length;j++) {
         const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
@@ -461,7 +480,7 @@ function initBackground() {
         if(d<maxD) {
           ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y);
           ctx.lineTo(particles[j].x,particles[j].y);
-          ctx.strokeStyle=`rgba(0,240,255,${(1-d/maxD)*0.06})`; ctx.lineWidth=1; ctx.stroke();
+          ctx.strokeStyle=`rgba(255,255,255,${(1-d/maxD)*0.03})`; ctx.lineWidth=1; ctx.stroke();
         }
       }
     }
@@ -473,71 +492,30 @@ function initBackground() {
 }
 
 /* ============================================================
-   16. LIVE ACTIVITY LOG
+   14. SCROLL REVEAL OBSERVER
    ============================================================ */
-const LOG_POOL = [
-  { t:'info',    text:'System heartbeat OK — latency 2ms' },
-  { t:'success', text:'Rakshak AI threat scan complete — 0 threats' },
-  { t:'warn',    text:'BranchIQ API call — latency spike, auto-resolved' },
-  { t:'info',    text:'Content idea queued: AI reels batch #12' },
-  { t:'success', text:'SecureChat encryption keys rotated' },
-  { t:'info',    text:'GitHub push — NikhilOS portfolio update' },
-  { t:'warn',    text:'DoseWiz safety check — all dosage flags cleared' },
-  { t:'success', text:'Neural model checkpoint saved — Rakshak v3.2' },
-];
-let logPoolIdx = 0;
-
-function initLog() {
-  const initial = [
-    { t:'info',    text:'NikhilOS content module initialized' },
-    { t:'success', text:'AI tutorial queued for upload' },
-    { t:'warn',    text:'Rakshak AI v3.1 threat model deployed' },
-    { t:'info',    text:'Cybersecurity research session — 3h 20m' },
-    { t:'success', text:'BranchIQ production deployment verified' },
-  ];
-  const el = document.getElementById('log-scroll');
-  if (!el) return;
-
-  initial.forEach(addLogEntry);
-  setInterval(() => {
-    addLogEntry(LOG_POOL[logPoolIdx % LOG_POOL.length]);
-    logPoolIdx++;
-  }, 5000);
-}
-
-function addLogEntry(entry) {
-  const el = document.getElementById('log-scroll');
-  if (!el) return;
-  const now = new Date();
-  const ts = `[${now.toLocaleDateString('en-CA')} ${now.toLocaleTimeString('en-GB',{hour12:false})}]`;
-  const typeMap={ info:'le-type-i INFO', success:'le-type-s SUCCESS', warn:'le-type-w BUILD' };
-  const classMap={ info:'le-info', success:'le-success', warn:'le-warn' };
-  const [typeCls, typeLabel] = typeMap[entry.t].split(' ');
-
-  const div=document.createElement('div');
-  div.className=`log-entry ${classMap[entry.t]}`;
-  div.innerHTML=`<span class="le-time">${ts}</span><span class="${typeCls}">[${typeLabel}]</span> ${entry.text}`;
-  el.insertBefore(div, el.firstChild);
-  while(el.children.length > 14) el.removeChild(el.lastChild);
-}
-
-/* ============================================================
-   17. INTERSECTION OBSERVER — animate on viewport
-   ============================================================ */
-function initObserver() {
-  const obs = new IntersectionObserver(entries => {
+function initScrollReveal() {
+  const obs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.style.animation = 'secIn 0.5s cubic-bezier(0.16,1,0.3,1) both';
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
         obs.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.glass-card').forEach(c => obs.observe(c));
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  const elements = document.querySelectorAll('.glass-card, .time-node, .sec-hdr, .section-lead');
+  elements.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+    obs.observe(el);
+  });
 }
 
 /* ============================================================
-   18. MAIN START
+   15. MAIN START
    ============================================================ */
 function startOS() {
   startClock();
@@ -545,9 +523,11 @@ function startOS() {
   initBackground();
   initTilt();
   initRipple();
-  initObserver();
-  initLog();
-  // Fire home section features directly (navigate guard skips if already 'home')
+  initMagneticButtons();
+  initCapabilityMatrix();
+  initScrollReveal();
+  
+  // Fire home section features
   setTimeout(() => {
     startTyping();
     animateCounters();
