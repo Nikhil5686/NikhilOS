@@ -1,655 +1,761 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="NikhilOS — Cinematic AI Robotics Engineering Portfolio of Nikhil Raj. Systems Builder, Cybersecurity Expert & Future Technologies Architect."/>
-  <meta name="theme-color" content="#050714"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="NikhilOS — Cinematic AI Robotics Engineering Portfolio of Nikhil Raj. Systems Builder, Cybersecurity Expert & Future Technologies Architect." />
+  <meta name="theme-color" content="#050714" />
   <title>NikhilOS | AI + Robotics Systems Builder</title>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/main.css"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css" />
 </head>
+
 <body>
 
-<!-- CUSTOM CURSOR -->
-<div id="cx-dot"></div>
-<div id="cx-ring"></div>
+  <!-- CUSTOM CURSOR -->
+  <div id="cx-dot"></div>
+  <div id="cx-ring"></div>
 
-<!-- ====== BOOT SCREEN ====== -->
-<div id="boot">
-  <div class="boot-bg-anim"></div>
-  <div class="boot-center">
-    <div class="boot-hex-icon">
-      <svg width="64" height="64" viewBox="0 0 48 48" fill="none">
-        <path d="M24 2L44 13.5V35.5L24 47L4 35.5V13.5L24 2Z" stroke="#00f0ff" stroke-width="1.5" fill="rgba(0,240,255,0.05)"/>
-        <path d="M24 10L38 18V34L24 42L10 34V18L24 10Z" stroke="#00f0ff" stroke-width="1" fill="none" opacity="0.4"/>
-      </svg>
-    </div>
-    <h1 class="boot-title">NikhilOS</h1>
-    <div class="boot-build">KERNEL AI-CORE v9001 · ROBOTICS PROTOCOL · SECURE</div>
-    <div class="boot-log-box">
-      <div class="boot-log" id="boot-log"></div>
-    </div>
-    <div class="boot-bar-wrap">
-      <div class="boot-bar-track">
-        <div class="boot-bar-fill" id="boot-bar"></div>
+  <!-- ====== BOOT SCREEN ====== -->
+  <div id="boot">
+    <div class="boot-bg-anim"></div>
+    <div class="boot-center">
+      <div class="boot-hex-icon">
+        <svg width="64" height="64" viewBox="0 0 48 48" fill="none">
+          <path d="M24 2L44 13.5V35.5L24 47L4 35.5V13.5L24 2Z" stroke="#00f0ff" stroke-width="1.5"
+            fill="rgba(0,240,255,0.05)" />
+          <path d="M24 10L38 18V34L24 42L10 34V18L24 10Z" stroke="#00f0ff" stroke-width="1" fill="none" opacity="0.4" />
+        </svg>
       </div>
-      <span class="boot-pct" id="boot-pct">0%</span>
+      <h1 class="boot-title">NikhilOS</h1>
+      <div class="boot-build">KERNEL AI-CORE v9001 · ROBOTICS PROTOCOL · SECURE</div>
+      <div class="boot-log-box">
+        <div class="boot-log" id="boot-log"></div>
+      </div>
+      <div class="boot-bar-wrap">
+        <div class="boot-bar-track">
+          <div class="boot-bar-fill" id="boot-bar"></div>
+        </div>
+        <span class="boot-pct" id="boot-pct">0%</span>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ====== OS SHELL ====== -->
-<div id="shell" class="shell-hidden">
+  <!-- ====== OS SHELL ====== -->
+  <div id="shell" class="shell-hidden">
 
-  <!-- AMBIENT BG -->
-  <div class="ambient-layer">
-    <canvas id="bg-canvas"></canvas>
-    <div class="aurora">
-      <div class="ab ab1"></div>
-      <div class="ab ab2"></div>
-      <div class="ab ab3"></div>
-    </div>
-    <div class="grid-overlay"></div>
-    <div class="crt-lines"></div>
-  </div>
-
-  <!-- NAV -->
-  <nav class="nav" id="nav">
-    <div class="nav-brand" onclick="navigate('home')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-        <path d="M12 1L22 6.5V17.5L12 23L2 17.5V6.5L12 1Z" stroke="#00f0ff" stroke-width="1.5" fill="rgba(0,240,255,0.08)"/>
-      </svg>
-      <span class="nb-name">NikhilOS</span>
-      <span class="nb-ver">v2026.1</span>
-    </div>
-    <ul class="nav-list" id="nav-list">
-      <li class="ni active" data-s="home">Home</li>
-      <li class="ni" data-s="about">About</li>
-      <li class="ni" data-s="projects">Mission Archive</li>
-      <li class="ni" data-s="timeline">Timeline</li>
-      <li class="ni" data-s="skills">Capabilities</li>
-      <li class="ni" data-s="vision">Vision</li>
-      <li class="ni" data-s="failures">Post-Mortems</li>
-    </ul>
-    <div class="nav-right">
-      <div class="nr-clock" id="nr-clock">--:--:--</div>
-      <div class="nr-status"><span class="pulse-dot"></span><span>SYS.NOMINAL</span></div>
-      <button class="burger" id="burger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- MOBILE DRAWER -->
-  <div class="drawer" id="drawer">
-    <ul>
-      <li onclick="navigate('home')">Home</li>
-      <li onclick="navigate('about')">About</li>
-      <li onclick="navigate('projects')">Mission Archive</li>
-      <li onclick="navigate('timeline')">Timeline</li>
-      <li onclick="navigate('skills')">Capabilities</li>
-      <li onclick="navigate('vision')">Vision</li>
-      <li onclick="navigate('failures')">Post-Mortems</li>
-    </ul>
-  </div>
-  <div class="drawer-backdrop" id="drawer-backdrop" onclick="closeDrawer()"></div>
-
-  <!-- MAIN -->
-  <main id="main">
-
-    <!-- ===== HOME ===== -->
-    <section id="home" class="section s-active">
-      <div class="container">
-        <div class="hero">
-          <div class="hero-left">
-            <div class="hero-badge">
-              <span class="hb-dot"></span>
-              <span>Kernel Online · Secure Mode</span>
-            </div>
-            <h1 class="hero-name">
-              <span class="hn-line1">NIKHIL</span>
-              <span class="hn-line2">RAJ</span>
-            </h1>
-            <div class="hero-role">
-              <span class="hr-bracket">[</span>
-              <span class="hr-text">AI + Robotics Systems Builder</span>
-              <span class="hr-bracket">]</span>
-            </div>
-            <div class="hero-typed">
-              <span class="hty-arrow">❯</span>
-              <span id="typed" class="hty-text"></span>
-              <span class="hty-cur">▮</span>
-            </div>
-            <p class="hero-desc">I don't just write code. I architect real-world systems bridging hardware, intelligence, and secure infrastructure. Building the operating systems for tomorrow's machines.</p>
-            <div class="hero-btns">
-              <button class="btn-primary ripple-el magnetic-btn" onclick="navigate('projects')">
-                Access Mission Archive <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-              </button>
-              <button class="btn-ghost ripple-el magnetic-btn" onclick="navigate('vision')">View Directives</button>
-            </div>
-            <div class="hero-metrics">
-              <div class="hm-item">
-                <div class="hm-val" data-target="15">0</div>
-                <div class="hm-label">Deployed Systems</div>
-              </div>
-              <div class="hm-div"></div>
-              <div class="hm-item">
-                <div class="hm-val" data-target="99">0</div>
-                <div class="hm-label">System Uptime (%)</div>
-              </div>
-              <div class="hm-div"></div>
-              <div class="hm-item">
-                <div class="hm-val" data-target="5">0</div>
-                <div class="hm-label">Active Nodes</div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- HOLOGRAPHIC AI CORE -->
-          <div class="hero-right">
-            <div class="hero-ai-core">
-              <svg viewBox="0 0 400 400" class="hologram-svg">
-                <defs>
-                  <radialGradient id="core-glow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="rgba(0, 240, 255, 0.4)"/>
-                    <stop offset="100%" stop-color="rgba(0, 240, 255, 0)"/>
-                  </radialGradient>
-                  <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur1" />
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur2" />
-                    <feMerge>
-                      <feMergeNode in="blur2" />
-                      <feMergeNode in="blur1" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                </defs>
-                
-                <!-- Background Glow -->
-                <circle cx="200" cy="200" r="150" fill="url(#core-glow)" />
-                
-                <!-- Rotating Rings -->
-                <g class="rotating-ring ring-outer">
-                  <circle cx="200" cy="200" r="160" fill="none" stroke="rgba(0,240,255,0.15)" stroke-width="1" stroke-dasharray="4 8" />
-                  <circle cx="200" cy="200" r="140" fill="none" stroke="rgba(139,92,246,0.2)" stroke-width="2" stroke-dasharray="60 20" />
-                </g>
-                <g class="rotating-ring ring-inner">
-                  <circle cx="200" cy="200" r="120" fill="none" stroke="rgba(16,255,176,0.3)" stroke-width="1" stroke-dasharray="10 10" />
-                  <path d="M 200 80 A 120 120 0 0 1 320 200" fill="none" stroke="#00f0ff" stroke-width="3" filter="url(#neon-glow)" />
-                </g>
-
-                <!-- Central Hexagon Core -->
-                <g class="hex-core" transform="translate(200, 200)">
-                  <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="rgba(0,240,255,0.05)" stroke="#00f0ff" stroke-width="2" filter="url(#neon-glow)"/>
-                  <polygon points="0,-45 39,-22.5 39,22.5 0,45 -39,22.5 -39,-22.5" fill="rgba(139,92,246,0.1)" stroke="#8b5cf6" stroke-width="1.5"/>
-                  <circle cx="0" cy="0" r="15" fill="#00f0ff" filter="url(#neon-glow)" class="core-pulse"/>
-                </g>
-                
-                <!-- Floating Data Nodes -->
-                <g class="data-nodes">
-                  <!-- Lines connecting to core -->
-                  <line x1="200" y1="200" x2="80" y2="100" stroke="rgba(0,240,255,0.3)" stroke-width="1" />
-                  <line x1="200" y1="200" x2="330" y2="120" stroke="rgba(139,92,246,0.3)" stroke-width="1" />
-                  <line x1="200" y1="200" x2="100" y2="300" stroke="rgba(16,255,176,0.3)" stroke-width="1" />
-                  <line x1="200" y1="200" x2="300" y2="320" stroke="rgba(0,240,255,0.3)" stroke-width="1" />
-                  
-                  <!-- Nodes -->
-                  <g class="node float-1" transform="translate(80, 100)">
-                    <rect x="-25" y="-10" width="50" height="20" rx="3" fill="rgba(0,0,0,0.6)" stroke="#00f0ff" stroke-width="1"/>
-                    <text x="0" y="3" font-family="'JetBrains Mono'" font-size="8" fill="#00f0ff" text-anchor="middle">VISION</text>
-                  </g>
-                  <g class="node float-2" transform="translate(330, 120)">
-                    <rect x="-25" y="-10" width="50" height="20" rx="3" fill="rgba(0,0,0,0.6)" stroke="#8b5cf6" stroke-width="1"/>
-                    <text x="0" y="3" font-family="'JetBrains Mono'" font-size="8" fill="#8b5cf6" text-anchor="middle">LOGIC</text>
-                  </g>
-                  <g class="node float-3" transform="translate(100, 300)">
-                    <rect x="-25" y="-10" width="50" height="20" rx="3" fill="rgba(0,0,0,0.6)" stroke="#10ffb0" stroke-width="1"/>
-                    <text x="0" y="3" font-family="'JetBrains Mono'" font-size="8" fill="#10ffb0" text-anchor="middle">SENSORS</text>
-                  </g>
-                  <g class="node float-4" transform="translate(300, 320)">
-                    <rect x="-25" y="-10" width="50" height="20" rx="3" fill="rgba(0,0,0,0.6)" stroke="#00f0ff" stroke-width="1"/>
-                    <text x="0" y="3" font-family="'JetBrains Mono'" font-size="8" fill="#00f0ff" text-anchor="middle">MOTOR_CTL</text>
-                  </g>
-                </g>
-              </svg>
-            </div>
-          </div>
-        </div>
+    <!-- AMBIENT BG -->
+    <div class="ambient-layer">
+      <canvas id="bg-canvas"></canvas>
+      <div class="aurora">
+        <div class="ab ab1"></div>
+        <div class="ab ab2"></div>
+        <div class="ab ab3"></div>
       </div>
-    </section>
+      <div class="grid-overlay"></div>
+      <div class="crt-lines"></div>
+    </div>
 
-    <!-- ===== ABOUT ===== -->
-    <section id="about" class="section">
-      <div class="container">
-        <div class="sec-hdr">
-          <span class="sec-tag">SYS_INFO · MODULE_02</span>
-          <h2 class="sec-title">System Architect Profile</h2>
-          <div class="sec-line"></div>
-        </div>
-        <div class="about-grid">
-          <div class="about-id glass-card tilt-card">
-            <div class="aid-avatar">
-              <div class="ava-ring r-out"></div>
-              <div class="ava-ring r-in"></div>
-              <div class="ava-core">NR</div>
-            </div>
-            <div class="aid-online"><span class="pulse-dot"></span> CONNECTION STABLE</div>
-            <h3 class="aid-name">Nikhil Raj</h3>
-            <p class="aid-role">Systems Engineer</p>
-            <div class="aid-tags">
-              <span class="atag">Robotics</span>
-              <span class="atag">AI</span>
-              <span class="atag">Cybersecurity</span>
-              <span class="atag t-purple">Backend Ops</span>
-            </div>
-            <div class="aid-socials">
-              <a href="https://github.com/Nikhil5686" target="_blank" rel="noopener noreferrer" class="solink magnetic-btn" id="sl-github" aria-label="GitHub">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-              </a>
-              <a href="https://www.linkedin.com/in/nikhil-raj-4707603a3/" target="_blank" rel="noopener noreferrer" class="solink magnetic-btn" id="sl-linkedin" aria-label="LinkedIn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-              </a>
-              <a href="#" class="solink magnetic-btn" id="sl-twitter" aria-label="Twitter/X">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-              </a>
-            </div>
-          </div>
-          <div class="about-specs glass-card">
-            <div class="panel-hdr"><span class="ph-b">〈</span> HARDWARE & SOFTWARE SPEC <span class="ph-b">〉</span></div>
-            <div class="spec-rows">
-              <div class="sr"><span class="sk">CLASSIFICATION</span><span class="sv">B.Tech Engineering Candidate</span></div>
-              <div class="sr"><span class="sk">PRIMARY_CORE</span><span class="sv sv-cyan">Robotic Control & Computer Vision</span></div>
-              <div class="sr"><span class="sk">SECONDARY_CORE</span><span class="sv">Secure Backend & Data Processing</span></div>
-              <div class="sr"><span class="sk">CURRENT_LOC</span><span class="sv">Earth Sector [India]</span></div>
-              <div class="sr"><span class="sk">SYS_STATUS</span><span class="sv sv-green">Executing Deployment Phase</span></div>
-              <div class="sr"><span class="sk">DIRECTIVE</span><span class="sv sv-mission">Build intelligent agents that interact physically.</span></div>
-            </div>
-          </div>
-          <div class="about-bio glass-card">
-            <div class="term-bar">
-              <span class="tbd r"></span><span class="tbd y"></span><span class="tbd g"></span>
-              <span class="tb-title">/sys/class/nikhilraj/identity.cfg</span>
-            </div>
-            <div class="bio-body">
-              <p class="bio-cmt"># Engineering Profile loaded...</p><br>
-              <p>I operate at the intersection of <span class="hl cyan">artificial intelligence</span>, <span class="hl purple">hardware systems</span>, and <span class="hl green">secure network architecture</span>.</p><br>
-              <p>While many build isolated algorithms, my focus is on integration: deploying neural networks onto edge devices, bridging sensors with logic, and ensuring the resulting automated systems are resilient against cyber threats.</p><br>
-              <p>The future isn't just software. The future is code that moves. <span class="hl cyan">I build the systems that power it.</span></p><br>
-              <p class="bio-cmt"># EOF ▮</p>
-            </div>
-          </div>
-        </div>
+    <!-- NAV -->
+    <nav class="nav" id="nav">
+      <div class="nav-brand" onclick="navigate('home')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 1L22 6.5V17.5L12 23L2 17.5V6.5L12 1Z" stroke="#00f0ff" stroke-width="1.5"
+            fill="rgba(0,240,255,0.08)" />
+        </svg>
+        <span class="nb-name">NikhilOS</span>
+        <span class="nb-ver">v2026.1</span>
       </div>
-    </section>
+      <ul class="nav-list" id="nav-list">
+        <li class="ni active" data-s="home">Home</li>
+        <li class="ni" data-s="about">About</li>
+        <li class="ni" data-s="projects">Mission Archive</li>
+        <li class="ni" data-s="timeline">Timeline</li>
+        <li class="ni" data-s="skills">Capabilities</li>
+        <li class="ni" data-s="vision">Vision</li>
+        <li class="ni" data-s="failures">Post-Mortems</li>
+      </ul>
+      <div class="nav-right">
+        <div class="nr-clock" id="nr-clock">--:--:--</div>
+        <div class="nr-status"><span class="pulse-dot"></span><span>SYS.NOMINAL</span></div>
+        <button class="burger" id="burger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
 
-    <!-- ===== PROJECTS ===== -->
-    <section id="projects" class="section">
-      <div class="container">
-        <div class="sec-hdr">
-          <span class="sec-tag">MISSION_ARCHIVE · MODULE_03</span>
-          <h2 class="sec-title">Deployed Systems</h2>
-          <div class="sec-line"></div>
-        </div>
-        <div class="modules-layout">
-          <!-- FLAGSHIP: RAKSHAK AI -->
-          <div class="flagship glass-card tilt-card" id="mod-rakshak">
-            <div class="fs-left">
-              <div class="fs-badge"><span class="pulse-dot"></span> COMMAND_TIER SYSTEM</div>
-              <div class="fs-id">MISSION: RAKSHAK_AI_01</div>
-              <h3 class="fs-name">Rakshak AI <span class="fs-version">v3.2</span></h3>
-              <p class="fs-desc">An autonomous threat intelligence system utilizing edge-deployed neural networks for real-time spatial analysis and behavioral anomaly detection. Designed for defensive robotics applications.</p>
-              
-              <div class="fs-arch-specs">
-                <div class="fs-spec"><span class="lbl">LATENCY</span><span class="val">12ms Edge</span></div>
-                <div class="fs-spec"><span class="lbl">SENSORS</span><span class="val">LIDAR, IR Vision</span></div>
-                <div class="fs-spec"><span class="lbl">KERNEL</span><span class="val">Custom Linux</span></div>
-              </div>
+    <!-- MOBILE DRAWER -->
+    <div class="drawer" id="drawer">
+      <ul>
+        <li onclick="navigate('home')">Home</li>
+        <li onclick="navigate('about')">About</li>
+        <li onclick="navigate('projects')">Mission Archive</li>
+        <li onclick="navigate('timeline')">Timeline</li>
+        <li onclick="navigate('skills')">Capabilities</li>
+        <li onclick="navigate('vision')">Vision</li>
+        <li onclick="navigate('failures')">Post-Mortems</li>
+      </ul>
+    </div>
+    <div class="drawer-backdrop" id="drawer-backdrop" onclick="closeDrawer()"></div>
 
-              <div class="fs-tags">
-                <span>Computer Vision</span><span>Edge AI</span><span>ROS2</span><span>Python</span><span>Hardware I/O</span>
+    <!-- MAIN -->
+    <main id="main">
+
+      <!-- ===== HOME ===== -->
+      <section id="home" class="section s-active">
+        <div class="container">
+          <div class="hero">
+            <div class="hero-left">
+              <div class="hero-badge">
+                <span class="hb-dot"></span>
+                <span>Kernel Online · Secure Mode</span>
               </div>
-              <div class="fs-footer">
-                <button class="btn-primary sm ripple-el magnetic-btn">Access Telemetry →</button>
-                <div class="fs-meta">
-                  <span>🛡️ Defense Tech</span>
-                  <span class="sv-green">✓ Deployed</span>
+              <h1 class="hero-name">
+                <span class="hn-line1">NIKHIL</span>
+                <span class="hn-line2">RAJ</span>
+              </h1>
+              <div class="hero-role">
+                <span class="hr-bracket">[</span>
+                <span class="hr-text">AI + Robotics Systems Builder</span>
+                <span class="hr-bracket">]</span>
+              </div>
+              <div class="hero-typed">
+                <span class="hty-arrow">❯</span>
+                <span id="typed" class="hty-text"></span>
+                <span class="hty-cur">▮</span>
+              </div>
+              <p class="hero-desc">I don't just write code. I architect real-world systems bridging hardware,
+                intelligence, and secure infrastructure. Building the operating systems for tomorrow's machines.</p>
+              <div class="hero-btns">
+                <button class="btn-primary ripple-el magnetic-btn" onclick="navigate('projects')">
+                  Access Mission Archive <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.5"
+                      stroke-linecap="round" />
+                  </svg>
+                </button>
+                <button class="btn-ghost ripple-el magnetic-btn" onclick="navigate('vision')">View Directives</button>
+              </div>
+              <div class="hero-metrics">
+                <div class="hm-item">
+                  <div class="hm-val" data-target="15">0</div>
+                  <div class="hm-label">Deployed Systems</div>
+                </div>
+                <div class="hm-div"></div>
+                <div class="hm-item">
+                  <div class="hm-val" data-target="99">0</div>
+                  <div class="hm-label">System Uptime (%)</div>
+                </div>
+                <div class="hm-div"></div>
+                <div class="hm-item">
+                  <div class="hm-val" data-target="5">0</div>
+                  <div class="hm-label">Active Nodes</div>
                 </div>
               </div>
             </div>
-            <div class="fs-right">
-              <!-- Cinematic Architecture Flow Diagram -->
-              <div class="fs-arch-diagram">
-                <div class="panel-hdr"><span class="ph-b">〈</span> SYSTEM ARCHITECTURE <span class="ph-b">〉</span></div>
-                <svg viewBox="0 0 300 200" class="arch-svg" id="rakshak-arch">
+
+            <!-- HOLOGRAPHIC AI CORE -->
+            <div class="hero-right">
+              <div class="hero-ai-core">
+                <svg viewBox="0 0 400 400" class="hologram-svg">
                   <defs>
-                    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                      <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(0,240,255,0.6)" />
-                    </marker>
-                    <linearGradient id="flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="rgba(0,240,255,0.2)"/>
-                      <stop offset="100%" stop-color="#00f0ff"/>
-                    </linearGradient>
+                    <radialGradient id="core-glow" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stop-color="rgba(0, 240, 255, 0.4)" />
+                      <stop offset="100%" stop-color="rgba(0, 240, 255, 0)" />
+                    </radialGradient>
+                    <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur1" />
+                      <feGaussianBlur in="SourceGraphic" stdDeviation="15" result="blur2" />
+                      <feMerge>
+                        <feMergeNode in="blur2" />
+                        <feMergeNode in="blur1" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
                   </defs>
-                  
-                  <!-- Boxes -->
-                  <rect x="10" y="30" width="70" height="40" rx="4" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)"/>
-                  <text x="45" y="50" font-family="'JetBrains Mono'" font-size="7" fill="#fff" text-anchor="middle">SENSOR</text>
-                  <text x="45" y="60" font-family="'JetBrains Mono'" font-size="5" fill="#6b7fa8" text-anchor="middle">ARRAY</text>
 
-                  <rect x="115" y="80" width="70" height="40" rx="4" fill="rgba(0,240,255,0.1)" stroke="#00f0ff"/>
-                  <text x="150" y="100" font-family="'JetBrains Mono'" font-size="7" fill="#00f0ff" text-anchor="middle">NEURAL</text>
-                  <text x="150" y="110" font-family="'JetBrains Mono'" font-size="5" fill="#00f0ff" text-anchor="middle">ENGINE</text>
+                  <!-- Background Glow -->
+                  <circle cx="200" cy="200" r="150" fill="url(#core-glow)" />
 
-                  <rect x="220" y="30" width="70" height="40" rx="4" fill="rgba(255,0,0,0.1)" stroke="#ff5f57"/>
-                  <text x="255" y="50" font-family="'JetBrains Mono'" font-size="7" fill="#ff5f57" text-anchor="middle">THREAT</text>
-                  <text x="255" y="60" font-family="'JetBrains Mono'" font-size="5" fill="#ff5f57" text-anchor="middle">RESPONSE</text>
+                  <!-- Rotating Rings -->
+                  <g class="rotating-ring ring-outer">
+                    <circle cx="200" cy="200" r="160" fill="none" stroke="rgba(0,240,255,0.15)" stroke-width="1"
+                      stroke-dasharray="4 8" />
+                    <circle cx="200" cy="200" r="140" fill="none" stroke="rgba(139,92,246,0.2)" stroke-width="2"
+                      stroke-dasharray="60 20" />
+                  </g>
+                  <g class="rotating-ring ring-inner">
+                    <circle cx="200" cy="200" r="120" fill="none" stroke="rgba(16,255,176,0.3)" stroke-width="1"
+                      stroke-dasharray="10 10" />
+                    <path d="M 200 80 A 120 120 0 0 1 320 200" fill="none" stroke="#00f0ff" stroke-width="3"
+                      filter="url(#neon-glow)" />
+                  </g>
 
-                  <!-- Paths -->
-                  <path d="M 80 50 L 95 50 L 95 100 L 115 100" fill="none" stroke="rgba(0,240,255,0.3)" stroke-width="2" marker-end="url(#arrow)" class="arch-path p1"/>
-                  <path d="M 185 100 L 205 100 L 205 50 L 220 50" fill="none" stroke="rgba(255,95,87,0.3)" stroke-width="2" marker-end="url(#arrow)" class="arch-path p2"/>
-                  
-                  <!-- Flow particles (animated via JS) -->
-                  <circle cx="0" cy="0" r="2" fill="#00f0ff" filter="url(#neon-glow)" id="particle1" opacity="0"/>
-                  <circle cx="0" cy="0" r="2" fill="#ff5f57" filter="url(#neon-glow)" id="particle2" opacity="0"/>
+                  <!-- Central Hexagon Core -->
+                  <g class="hex-core" transform="translate(200, 200)">
+                    <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30" fill="rgba(0,240,255,0.05)"
+                      stroke="#00f0ff" stroke-width="2" filter="url(#neon-glow)" />
+                    <polygon points="0,-45 39,-22.5 39,22.5 0,45 -39,22.5 -39,-22.5" fill="rgba(139,92,246,0.1)"
+                      stroke="#8b5cf6" stroke-width="1.5" />
+                    <circle cx="0" cy="0" r="15" fill="#00f0ff" filter="url(#neon-glow)" class="core-pulse" />
+                  </g>
+
+                  <!-- Floating Data Nodes -->
+                  <g class="data-nodes">
+                    <!-- Lines connecting to core -->
+                    <line x1="200" y1="200" x2="80" y2="100" stroke="rgba(0,240,255,0.3)" stroke-width="1" />
+                    <line x1="200" y1="200" x2="330" y2="120" stroke="rgba(139,92,246,0.3)" stroke-width="1" />
+                    <line x1="200" y1="200" x2="100" y2="300" stroke="rgba(16,255,176,0.3)" stroke-width="1" />
+                    <line x1="200" y1="200" x2="300" y2="320" stroke="rgba(0,240,255,0.3)" stroke-width="1" />
+
+                    <!-- Nodes -->
+                    <g class="node float-1" transform="translate(80, 100)">
+                      <rect x="-25" y="-10" width="50" height="20" rx="3" fill="rgba(0,0,0,0.6)" stroke="#00f0ff"
+                        stroke-width="1" />
+                      <text x="0" y="3" font-family="'JetBrains Mono'" font-size="8" fill="#00f0ff"
+                        text-anchor="middle">VISION</text>
+                    </g>
+                    <g class="node float-2" transform="translate(330, 120)">
+                      <rect x="-25" y="-10" width="50" height="20" rx="3" fill="rgba(0,0,0,0.6)" stroke="#8b5cf6"
+                        stroke-width="1" />
+                      <text x="0" y="3" font-family="'JetBrains Mono'" font-size="8" fill="#8b5cf6"
+                        text-anchor="middle">LOGIC</text>
+                    </g>
+                    <g class="node float-3" transform="translate(100, 300)">
+                      <rect x="-25" y="-10" width="50" height="20" rx="3" fill="rgba(0,0,0,0.6)" stroke="#10ffb0"
+                        stroke-width="1" />
+                      <text x="0" y="3" font-family="'JetBrains Mono'" font-size="8" fill="#10ffb0"
+                        text-anchor="middle">SENSORS</text>
+                    </g>
+                    <g class="node float-4" transform="translate(300, 320)">
+                      <rect x="-25" y="-10" width="50" height="20" rx="3" fill="rgba(0,0,0,0.6)" stroke="#00f0ff"
+                        stroke-width="1" />
+                      <text x="0" y="3" font-family="'JetBrains Mono'" font-size="8" fill="#00f0ff"
+                        text-anchor="middle">MOTOR_CTL</text>
+                    </g>
+                  </g>
                 </svg>
               </div>
-              <div class="fs-screen mt-3">
-                <div class="fss-bar"><span></span><span></span><span></span></div>
-                <div class="fss-body" id="rakshak-term"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- GRID -->
-          <div class="mods-grid">
-            <div class="mod glass-card tilt-card" id="mod-securechat">
-              <div class="mod-top"><span class="mod-id">MISSION_02</span><span class="mod-st blue-st"><span class="pulse-dot blue-dot"></span>E2E_SECURE</span></div>
-              <h3 class="mod-name">SecureComms Node</h3>
-              <p class="mod-desc">Post-quantum cryptographic communication relay. Implements custom handshake protocols and zero-knowledge packet routing for highly sensitive data transmission.</p>
-              <div class="mod-tech-stack"><span>Go</span><span>WebSockets</span><span>AES-256</span></div>
-              <button class="mod-btn mb-b ripple-el magnetic-btn">View Implementation →</button>
-            </div>
-            
-            <div class="mod glass-card tilt-card" id="mod-branchiq">
-              <div class="mod-top"><span class="mod-id">MISSION_03</span><span class="mod-st purple-st"><span class="pulse-dot purple-dot"></span>LIVE_TRAFFIC</span></div>
-              <h3 class="mod-name">BranchIQ Core</h3>
-              <p class="mod-desc">Scalable intelligence API handling multi-threaded data ingestion and real-time semantic processing. Built to withstand high-volume concurrent requests with sub-100ms latency.</p>
-              <div class="mod-tech-stack"><span>Node.js</span><span>Redis</span><span>TensorFlow.js</span></div>
-              <button class="mod-btn mb-p ripple-el magnetic-btn">View Architecture →</button>
-            </div>
-            
-            <div class="mod glass-card tilt-card" id="mod-dosewiz">
-              <div class="mod-top"><span class="mod-id">MISSION_04</span><span class="mod-st orange-st"><span class="pulse-dot orange-dot"></span>STABLE_BUILD</span></div>
-              <h3 class="mod-name">DoseWiz Logic</h3>
-              <p class="mod-desc">Deterministic medical interaction engine. Uses strict algorithmic verification to cross-reference pharmaceutical combinations, preventing critical chemical conflicts.</p>
-              <div class="mod-tech-stack"><span>Python</span><span>PostgreSQL</span><span>FastAPI</span></div>
-              <button class="mod-btn mb-o ripple-el magnetic-btn">View Codebase →</button>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ===== VISION (NEW) ===== -->
-    <section id="vision" class="section">
-      <div class="container">
-        <div class="sec-hdr">
-          <span class="sec-tag">DIRECTIVES · MODULE_04</span>
-          <h2 class="sec-title">Engineering Vision</h2>
-          <div class="sec-line"></div>
-        </div>
-        <div class="vision-grid">
-          <div class="vision-panel glass-card v-panel-1">
-            <div class="vp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <h3>Autonomous Infrastructure</h3>
-            <p>We are moving past human-in-the-loop systems. My focus is building resilient, self-healing networks that can interpret physical sensor data and execute logic without manual oversight. Code that acts in the physical world.</p>
+      <!-- ===== ABOUT ===== -->
+      <section id="about" class="section">
+        <div class="container">
+          <div class="sec-hdr">
+            <span class="sec-tag">SYS_INFO · MODULE_02</span>
+            <h2 class="sec-title">System Architect Profile</h2>
+            <div class="sec-line"></div>
           </div>
-          <div class="vision-panel glass-card v-panel-2">
-            <div class="vp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <h3>Zero-Trust Security</h3>
-            <p>When machines make decisions, security is no longer an add-on; it's the foundation. I engineer from a zero-trust perspective, ensuring every node, API call, and hardware handshake is cryptographically verified.</p>
-          </div>
-          <div class="vision-panel glass-card v-panel-3">
-            <div class="vp-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-            </div>
-            <h3>Hardware-Software Synthesis</h3>
-            <p>Software is limited by the glass screen. Robotics breaks that barrier. I am driven by the synthesis of low-level motor control with high-level cognitive models—building the connective tissue between thinking and moving.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== TIMELINE (NEW) ===== -->
-    <section id="timeline" class="section">
-      <div class="container">
-        <div class="sec-hdr">
-          <span class="sec-tag">EVOLUTION_LOG · MODULE_05</span>
-          <h2 class="sec-title">System Timeline</h2>
-          <div class="sec-line"></div>
-        </div>
-        
-        <div class="timeline-scroll-wrapper">
-          <div class="timeline-track">
-            
-            <div class="time-node t-past">
-              <div class="tn-marker"></div>
-              <div class="tn-year">2023</div>
-              <div class="tn-card glass-card">
-                <h4>System Initialization</h4>
-                <p>Began deep dive into Python automation and basic neural network architectures. Built first predictive models.</p>
+          <div class="about-grid">
+            <div class="about-id glass-card tilt-card">
+              <div class="aid-avatar">
+                <div class="ava-ring r-out"></div>
+                <div class="ava-ring r-in"></div>
+                <div class="ava-core">NR</div>
+              </div>
+              <div class="aid-online"><span class="pulse-dot"></span> CONNECTION STABLE</div>
+              <h3 class="aid-name">Nikhil Raj</h3>
+              <p class="aid-role">Systems Engineer</p>
+              <div class="aid-tags">
+                <span class="atag">Robotics</span>
+                <span class="atag">AI</span>
+                <span class="atag">Cybersecurity</span>
+                <span class="atag t-purple">Backend Ops</span>
+              </div>
+              <div class="aid-socials">
+                <a href="https://github.com/Nikhil5686" target="_blank" rel="noopener noreferrer"
+                  class="solink magnetic-btn" id="sl-github" aria-label="GitHub">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                  </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/nikhil-raj-4707603a3/" target="_blank" rel="noopener noreferrer"
+                  class="solink magnetic-btn" id="sl-linkedin" aria-label="LinkedIn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                </a>
+                <a href="#" class="solink magnetic-btn" id="sl-twitter" aria-label="Twitter/X">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                </a>
               </div>
             </div>
-
-            <div class="time-line-segment t-past"></div>
-
-            <div class="time-node t-past">
-              <div class="tn-marker"></div>
-              <div class="tn-year">2024</div>
-              <div class="tn-card glass-card">
-                <h4>BranchIQ Deployment</h4>
-                <p>Architected and deployed first full-stack application handling live user data with complex state management.</p>
+            <div class="about-specs glass-card">
+              <div class="panel-hdr"><span class="ph-b">〈</span> HARDWARE & SOFTWARE SPEC <span class="ph-b">〉</span>
+              </div>
+              <div class="spec-rows">
+                <div class="sr"><span class="sk">CLASSIFICATION</span><span class="sv">B.Tech Engineering
+                    Candidate</span></div>
+                <div class="sr"><span class="sk">PRIMARY_CORE</span><span class="sv sv-cyan">Robotic Control & Computer
+                    Vision</span></div>
+                <div class="sr"><span class="sk">SECONDARY_CORE</span><span class="sv">Secure Backend & Data
+                    Processing</span></div>
+                <div class="sr"><span class="sk">CURRENT_LOC</span><span class="sv">Earth Sector [India]</span></div>
+                <div class="sr"><span class="sk">SYS_STATUS</span><span class="sv sv-green">Executing Deployment
+                    Phase</span></div>
+                <div class="sr"><span class="sk">DIRECTIVE</span><span class="sv sv-mission">Build intelligent agents
+                    that interact physically.</span></div>
               </div>
             </div>
-
-            <div class="time-line-segment t-past"></div>
-
-            <div class="time-node t-past">
-              <div class="tn-marker marker-pulse"></div>
-              <div class="tn-year">2025</div>
-              <div class="tn-card glass-card border-glow-cyan">
-                <h4>Rakshak Protocol</h4>
-                <p>Shifted focus to hardware integration. Began developing edge-AI computer vision for defensive robotics applications.</p>
+            <div class="about-bio glass-card">
+              <div class="term-bar">
+                <span class="tbd r"></span><span class="tbd y"></span><span class="tbd g"></span>
+                <span class="tb-title">/sys/class/nikhilraj/identity.cfg</span>
+              </div>
+              <div class="bio-body">
+                <p class="bio-cmt"># Engineering Profile loaded...</p><br>
+                <p>I operate at the intersection of <span class="hl cyan">artificial intelligence</span>, <span
+                    class="hl purple">hardware systems</span>, and <span class="hl green">secure network
+                    architecture</span>.</p><br>
+                <p>While many build isolated algorithms, my focus is on integration: deploying neural networks onto edge
+                  devices, bridging sensors with logic, and ensuring the resulting automated systems are resilient
+                  against cyber threats.</p><br>
+                <p>The future isn't just software. The future is code that moves. <span class="hl cyan">I build the
+                    systems that power it.</span></p><br>
+                <p class="bio-cmt"># EOF ▮</p>
               </div>
             </div>
-
-            <div class="time-line-segment t-active"></div>
-
-            <div class="time-node t-current">
-              <div class="tn-marker marker-current"></div>
-              <div class="tn-year">2026</div>
-              <div class="tn-card glass-card border-glow-purple">
-                <span class="status-pill">CURRENT_EXECUTION</span>
-                <h4>Autonomous Systems</h4>
-                <p>Refining sensor fusion algorithms and securing edge communication nodes for fully autonomous response units.</p>
-              </div>
-            </div>
-
-            <div class="time-line-segment t-future"></div>
-
-            <div class="time-node t-future">
-              <div class="tn-marker marker-future"></div>
-              <div class="tn-year">2027+</div>
-              <div class="tn-card glass-card dim">
-                <h4>Swarm Intelligence</h4>
-                <p>Planned research into decentralized multi-agent coordination protocols.</p>
-              </div>
-            </div>
-
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ===== CAPABILITIES (SKILLS) ===== -->
-    <section id="skills" class="section">
-      <div class="container">
-        <div class="sec-hdr">
-          <span class="sec-tag">CAPABILITY_MATRIX · MODULE_06</span>
-          <h2 class="sec-title">Operational Domains</h2>
-          <div class="sec-line"></div>
-        </div>
-        
-        <div class="cap-layout">
-          <!-- Hex Grid -->
-          <div class="hex-grid-container">
-            <div class="hex-row">
-              <div class="hex-cell glass-card hc-cyan" data-domain="ai">
-                <div class="hex-inner">
-                  <div class="hi-icon">🧠</div>
-                  <span>Neural Architectures</span>
+      <!-- ===== PROJECTS ===== -->
+      <section id="projects" class="section">
+        <div class="container">
+          <div class="sec-hdr">
+            <span class="sec-tag">MISSION_ARCHIVE · MODULE_03</span>
+            <h2 class="sec-title">Deployed Systems</h2>
+            <div class="sec-line"></div>
+          </div>
+          <div class="modules-layout">
+            <!-- FLAGSHIP: RAKSHAK AI -->
+            <div class="flagship glass-card tilt-card" id="mod-rakshak">
+              <div class="fs-left">
+                <div class="fs-badge"><span class="pulse-dot"></span> COMMAND_TIER SYSTEM</div>
+                <div class="fs-id">MISSION: RAKSHAK_AI_01</div>
+                <h3 class="fs-name">Rakshak AI <span class="fs-version">v3.2</span></h3>
+                <p class="fs-desc">An autonomous threat intelligence system utilizing edge-deployed neural networks for
+                  real-time spatial analysis and behavioral anomaly detection. Designed for defensive robotics
+                  applications.</p>
+
+                <div class="fs-arch-specs">
+                  <div class="fs-spec"><span class="lbl">LATENCY</span><span class="val">12ms Edge</span></div>
+                  <div class="fs-spec"><span class="lbl">SENSORS</span><span class="val">LIDAR, IR Vision</span></div>
+                  <div class="fs-spec"><span class="lbl">KERNEL</span><span class="val">Custom Linux</span></div>
+                </div>
+
+                <div class="fs-tags">
+                  <span>Computer Vision</span><span>Edge AI</span><span>ROS2</span><span>Python</span><span>Hardware
+                    I/O</span>
+                </div>
+                <div class="fs-footer">
+                  <button class="btn-primary sm ripple-el magnetic-btn">Access Telemetry →</button>
+                  <div class="fs-meta">
+                    <span>🛡️ Defense Tech</span>
+                    <span class="sv-green">✓ Deployed</span>
+                  </div>
                 </div>
               </div>
-              <div class="hex-cell glass-card hc-purple" data-domain="robotics">
-                <div class="hex-inner">
-                  <div class="hi-icon">⚙️</div>
-                  <span>Robotic Integration</span>
+              <div class="fs-right">
+                <!-- Cinematic Architecture Flow Diagram -->
+                <div class="fs-arch-diagram">
+                  <div class="panel-hdr"><span class="ph-b">〈</span> SYSTEM ARCHITECTURE <span class="ph-b">〉</span>
+                  </div>
+                  <svg viewBox="0 0 300 200" class="arch-svg" id="rakshak-arch">
+                    <defs>
+                      <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6"
+                        orient="auto-start-reverse">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(0,240,255,0.6)" />
+                      </marker>
+                      <linearGradient id="flow-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="rgba(0,240,255,0.2)" />
+                        <stop offset="100%" stop-color="#00f0ff" />
+                      </linearGradient>
+                    </defs>
+
+                    <!-- Boxes -->
+                    <rect x="10" y="30" width="70" height="40" rx="4" fill="rgba(255,255,255,0.05)"
+                      stroke="rgba(255,255,255,0.2)" />
+                    <text x="45" y="50" font-family="'JetBrains Mono'" font-size="7" fill="#fff"
+                      text-anchor="middle">SENSOR</text>
+                    <text x="45" y="60" font-family="'JetBrains Mono'" font-size="5" fill="#6b7fa8"
+                      text-anchor="middle">ARRAY</text>
+
+                    <rect x="115" y="80" width="70" height="40" rx="4" fill="rgba(0,240,255,0.1)" stroke="#00f0ff" />
+                    <text x="150" y="100" font-family="'JetBrains Mono'" font-size="7" fill="#00f0ff"
+                      text-anchor="middle">NEURAL</text>
+                    <text x="150" y="110" font-family="'JetBrains Mono'" font-size="5" fill="#00f0ff"
+                      text-anchor="middle">ENGINE</text>
+
+                    <rect x="220" y="30" width="70" height="40" rx="4" fill="rgba(255,0,0,0.1)" stroke="#ff5f57" />
+                    <text x="255" y="50" font-family="'JetBrains Mono'" font-size="7" fill="#ff5f57"
+                      text-anchor="middle">THREAT</text>
+                    <text x="255" y="60" font-family="'JetBrains Mono'" font-size="5" fill="#ff5f57"
+                      text-anchor="middle">RESPONSE</text>
+
+                    <!-- Paths -->
+                    <path d="M 80 50 L 95 50 L 95 100 L 115 100" fill="none" stroke="rgba(0,240,255,0.3)"
+                      stroke-width="2" marker-end="url(#arrow)" class="arch-path p1" />
+                    <path d="M 185 100 L 205 100 L 205 50 L 220 50" fill="none" stroke="rgba(255,95,87,0.3)"
+                      stroke-width="2" marker-end="url(#arrow)" class="arch-path p2" />
+
+                    <!-- Flow particles (animated via JS) -->
+                    <circle cx="0" cy="0" r="2" fill="#00f0ff" filter="url(#neon-glow)" id="particle1" opacity="0" />
+                    <circle cx="0" cy="0" r="2" fill="#ff5f57" filter="url(#neon-glow)" id="particle2" opacity="0" />
+                  </svg>
                 </div>
-              </div>
-            </div>
-            <div class="hex-row alt">
-              <div class="hex-cell glass-card hc-green" data-domain="cyber">
-                <div class="hex-inner">
-                  <div class="hi-icon">🔐</div>
-                  <span>Zero-Trust Security</span>
-                </div>
-              </div>
-              <div class="hex-cell glass-card hc-blue hex-center" data-domain="core">
-                <div class="hex-inner">
-                  <div class="hi-icon">⚡</div>
-                  <span class="font-head">SYSTEMS ENGI</span>
-                </div>
-              </div>
-              <div class="hex-cell glass-card hc-orange" data-domain="backend">
-                <div class="hex-inner">
-                  <div class="hi-icon">🖧</div>
-                  <span>Distributed Backend</span>
+                <div class="fs-screen mt-3">
+                  <div class="fss-bar"><span></span><span></span><span></span></div>
+                  <div class="fss-body" id="rakshak-term"></div>
                 </div>
               </div>
             </div>
-            <div class="hex-row">
-              <div class="hex-cell glass-card hc-pink" data-domain="embedded">
-                <div class="hex-inner">
-                  <div class="hi-icon">📟</div>
-                  <span>Embedded Logic</span>
+
+            <!-- GRID -->
+            <div class="mods-grid">
+              <div class="mod glass-card tilt-card" id="mod-securechat">
+                <div class="mod-top"><span class="mod-id">MISSION_02</span><span class="mod-st blue-st"><span
+                      class="pulse-dot blue-dot"></span>E2E_SECURE</span></div>
+                <h3 class="mod-name">secure-connect-chat</h3>
+                <p class="mod-desc">Secure real-time chat application built with React, Vite, and Supabase. Features a robust frontend utilizing shadcn-ui and Tailwind CSS for optimal user experience.</p>
+                <div class="mod-tech-stack"><span>React</span><span>TypeScript</span><span>Supabase</span></div>
+                <button class="mod-btn mb-b ripple-el magnetic-btn" onclick="window.open('https://github.com/Nikhil5686/secure-connect-chat', '_blank')">View Implementation →</button>
+              </div>
+
+              <div class="mod glass-card tilt-card" id="mod-branchiq">
+                <div class="mod-top"><span class="mod-id">MISSION_03</span><span class="mod-st purple-st"><span
+                      class="pulse-dot purple-dot"></span>LIVE_TRAFFIC</span></div>
+                <h3 class="mod-name">Branch IQ</h3>
+                <p class="mod-desc">Scalable intelligence API handling multi-threaded data ingestion and real-time
+                  semantic processing. Built to withstand high-volume concurrent requests with sub-100ms latency.</p>
+                <div class="mod-tech-stack"><span>Node.js</span><span>Redis</span><span>TensorFlow.js</span></div>
+                <button class="mod-btn mb-p ripple-el magnetic-btn" onclick="window.open('https://github.com/Nikhil5686/BranchIQ', '_blank')">View Architecture →</button>
+              </div>
+
+              <div class="mod glass-card tilt-card" id="mod-dosewiz">
+                <div class="mod-top"><span class="mod-id">MISSION_04</span><span class="mod-st orange-st"><span
+                      class="pulse-dot orange-dot"></span>STABLE_BUILD</span></div>
+                <h3 class="mod-name">Medic-pro</h3>
+                <p class="mod-desc">Deterministic medical interaction engine. Uses strict algorithmic verification to
+                  cross-reference pharmaceutical combinations, preventing critical chemical conflicts.</p>
+                <div class="mod-tech-stack"><span>Python</span><span>PostgreSQL</span><span>FastAPI</span></div>
+                <button class="mod-btn mb-o ripple-el magnetic-btn" onclick="window.open('https://github.com/Nikhil5686/Medic-pro', '_blank')">View Codebase →</button>
+              </div>
+
+              <div class="mod glass-card tilt-card" id="mod-shieldnet">
+                <div class="mod-top"><span class="mod-id">MISSION_05</span><span class="mod-st green-st"><span
+                      class="pulse-dot green-dot"></span>DEFENSE_GRID</span></div>
+                <h3 class="mod-name">SHIELD-NET</h3>
+                <p class="mod-desc">Post-quantum cryptography based secure communication channel established for the defense sector to communicate. Features mesh topology for robust message packet routing.</p>
+                <div class="mod-tech-stack"><span>PQC</span><span>Mesh Network</span><span>Rust</span></div>
+                <button class="mod-btn mb-g ripple-el magnetic-btn" onclick="window.open('#', '_blank')">View Architecture →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== VISION (NEW) ===== -->
+      <section id="vision" class="section">
+        <div class="container">
+          <div class="sec-hdr">
+            <span class="sec-tag">DIRECTIVES · MODULE_04</span>
+            <h2 class="sec-title">Engineering Vision</h2>
+            <div class="sec-line"></div>
+          </div>
+          <div class="vision-grid">
+            <div class="vision-panel glass-card v-panel-1">
+              <div class="vp-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+              </div>
+              <h3>Autonomous Infrastructure</h3>
+              <p>We are moving past human-in-the-loop systems. My focus is building resilient, self-healing networks
+                that can interpret physical sensor data and execute logic without manual oversight. Code that acts in
+                the physical world.</p>
+            </div>
+            <div class="vision-panel glass-card v-panel-2">
+              <div class="vp-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <h3>Zero-Trust Security</h3>
+              <p>When machines make decisions, security is no longer an add-on; it's the foundation. I engineer from a
+                zero-trust perspective, ensuring every node, API call, and hardware handshake is cryptographically
+                verified.</p>
+            </div>
+            <div class="vision-panel glass-card v-panel-3">
+              <div class="vp-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                </svg>
+              </div>
+              <h3>Hardware-Software Synthesis</h3>
+              <p>Software is limited by the glass screen. Robotics breaks that barrier. I am driven by the synthesis of
+                low-level motor control with high-level cognitive models—building the connective tissue between thinking
+                and moving.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== TIMELINE (NEW) ===== -->
+      <section id="timeline" class="section">
+        <div class="container">
+          <div class="sec-hdr">
+            <span class="sec-tag">EVOLUTION_LOG · MODULE_05</span>
+            <h2 class="sec-title">System Timeline</h2>
+            <div class="sec-line"></div>
+          </div>
+
+          <div class="timeline-scroll-wrapper">
+            <div class="timeline-track">
+
+              <div class="time-node t-past">
+                <div class="tn-marker"></div>
+                <div class="tn-year">2023</div>
+                <div class="tn-card glass-card">
+                  <h4>System Initialization</h4>
+                  <p>Began deep dive into Python automation and basic neural network architectures. Built first
+                    predictive models.</p>
                 </div>
               </div>
-              <div class="hex-cell glass-card hc-cyan" data-domain="vision">
-                <div class="hex-inner">
-                  <div class="hi-icon">👁️</div>
-                  <span>Computer Vision</span>
+
+              <div class="time-line-segment t-past"></div>
+
+              <div class="time-node t-past">
+                <div class="tn-marker"></div>
+                <div class="tn-year">2024</div>
+                <div class="tn-card glass-card">
+                  <h4>BranchIQ Deployment</h4>
+                  <p>Architected and deployed first full-stack application handling live user data with complex state
+                    management.</p>
+                </div>
+              </div>
+
+              <div class="time-line-segment t-past"></div>
+
+              <div class="time-node t-past">
+                <div class="tn-marker marker-pulse"></div>
+                <div class="tn-year">2025</div>
+                <div class="tn-card glass-card border-glow-cyan">
+                  <h4>Rakshak Protocol</h4>
+                  <p>Shifted focus to hardware integration. Began developing edge-AI computer vision for defensive
+                    robotics applications.</p>
+                </div>
+              </div>
+
+              <div class="time-line-segment t-active"></div>
+
+              <div class="time-node t-current">
+                <div class="tn-marker marker-current"></div>
+                <div class="tn-year">2026</div>
+                <div class="tn-card glass-card border-glow-purple">
+                  <span class="status-pill">CURRENT_EXECUTION</span>
+                  <h4>Autonomous Systems</h4>
+                  <p>Refining sensor fusion algorithms and securing edge communication nodes for fully autonomous
+                    response units.</p>
+                </div>
+              </div>
+
+              <div class="time-line-segment t-future"></div>
+
+              <div class="time-node t-future">
+                <div class="tn-marker marker-future"></div>
+                <div class="tn-year">2027+</div>
+                <div class="tn-card glass-card dim">
+                  <h4>Swarm Intelligence</h4>
+                  <p>Planned research into decentralized multi-agent coordination protocols.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CAPABILITIES (SKILLS) ===== -->
+      <section id="skills" class="section">
+        <div class="container">
+          <div class="sec-hdr">
+            <span class="sec-tag">CAPABILITY_MATRIX · MODULE_06</span>
+            <h2 class="sec-title">Operational Domains</h2>
+            <div class="sec-line"></div>
+          </div>
+
+          <div class="cap-layout">
+            <!-- Hex Grid -->
+            <div class="hex-grid-container">
+              <div class="hex-row">
+                <div class="hex-cell glass-card hc-cyan" data-domain="ai">
+                  <div class="hex-inner">
+                    <div class="hi-icon">🧠</div>
+                    <span>Neural Architectures</span>
+                  </div>
+                </div>
+                <div class="hex-cell glass-card hc-purple" data-domain="robotics">
+                  <div class="hex-inner">
+                    <div class="hi-icon">⚙️</div>
+                    <span>Robotic Integration</span>
+                  </div>
+                </div>
+              </div>
+              <div class="hex-row alt">
+                <div class="hex-cell glass-card hc-green" data-domain="cyber">
+                  <div class="hex-inner">
+                    <div class="hi-icon">🔐</div>
+                    <span>Zero-Trust Security</span>
+                  </div>
+                </div>
+                <div class="hex-cell glass-card hc-blue hex-center" data-domain="core">
+                  <div class="hex-inner">
+                    <div class="hi-icon">⚡</div>
+                    <span class="font-head">SYSTEMS ENGI</span>
+                  </div>
+                </div>
+                <div class="hex-cell glass-card hc-orange" data-domain="backend">
+                  <div class="hex-inner">
+                    <div class="hi-icon">🖧</div>
+                    <span>Distributed Backend</span>
+                  </div>
+                </div>
+              </div>
+              <div class="hex-row">
+                <div class="hex-cell glass-card hc-pink" data-domain="embedded">
+                  <div class="hex-inner">
+                    <div class="hi-icon">📟</div>
+                    <span>Embedded Logic</span>
+                  </div>
+                </div>
+                <div class="hex-cell glass-card hc-cyan" data-domain="vision">
+                  <div class="hex-inner">
+                    <div class="hi-icon">👁️</div>
+                    <span>Computer Vision</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Domain Details Panel -->
+            <div class="cap-details glass-card" id="cap-details-panel">
+              <div class="panel-hdr"><span class="ph-b">〈</span> DOMAIN INSPECTOR <span class="ph-b">〉</span></div>
+              <div class="cd-empty">Select a node from the matrix to view specific capabilities and tech stack.</div>
+              <div class="cd-content hidden">
+                <h3 id="cd-title">Domain</h3>
+                <p id="cd-desc">Description</p>
+                <div class="panel-hdr mt-4"><span class="ph-b">〈</span> ASSOCIATED TECH <span class="ph-b">〉</span>
+                </div>
+                <div class="tech-tags" id="cd-tags">
+                  <!-- Injected via JS -->
                 </div>
               </div>
             </div>
           </div>
-          
-          <!-- Domain Details Panel -->
-          <div class="cap-details glass-card" id="cap-details-panel">
-            <div class="panel-hdr"><span class="ph-b">〈</span> DOMAIN INSPECTOR <span class="ph-b">〉</span></div>
-            <div class="cd-empty">Select a node from the matrix to view specific capabilities and tech stack.</div>
-            <div class="cd-content hidden">
-              <h3 id="cd-title">Domain</h3>
-              <p id="cd-desc">Description</p>
-              <div class="panel-hdr mt-4"><span class="ph-b">〈</span> ASSOCIATED TECH <span class="ph-b">〉</span></div>
-              <div class="tech-tags" id="cd-tags">
-                <!-- Injected via JS -->
+        </div>
+      </section>
+
+      <!-- ===== FAILURES (NEW) ===== -->
+      <section id="failures" class="section">
+        <div class="container">
+          <div class="sec-hdr">
+            <span class="sec-tag">POST_MORTEM_LOGS · MODULE_07</span>
+            <h2 class="sec-title">System Failures & Lessons</h2>
+            <div class="sec-line"></div>
+          </div>
+          <p class="section-lead">A true engineer's credibility isn't built on successes alone. It's built on the
+            wreckage of failed prototypes and the systems rebuilt from them.</p>
+
+          <div class="failures-grid">
+
+            <div class="fail-card glass-card">
+              <div class="fc-header">
+                <span class="fc-id">INCIDENT_01</span>
+                <span class="fc-status error">CRITICAL FAILURE</span>
+              </div>
+              <h3>Rakshak GPS Drift Anomalies</h3>
+              <div class="fc-body">
+                <p><strong>The Breakdown:</strong> Initial hardware tests relied on consumer-grade GPS for outdoor
+                  positioning. Drift caused the unit to register false-positives and attempt navigation through solid
+                  obstacles, leading to physical collision.</p>
+                <div class="fc-divider"></div>
+                <p><strong>The Fix:</strong> Scrapped pure GPS. Implemented a sensor fusion algorithm utilizing IMU
+                  data, wheel odometry, and LIDAR SLAM to create a robust local coordinate frame resilient to GPS
+                  multi-path errors.</p>
               </div>
             </div>
+
+            <div class="fail-card glass-card">
+              <div class="fc-header">
+                <span class="fc-id">INCIDENT_02</span>
+                <span class="fc-status warning">ARCHITECTURE BOTTLENECK</span>
+              </div>
+              <h3>BranchIQ Monolith Crash</h3>
+              <div class="fc-body">
+                <p><strong>The Breakdown:</strong> Attempted to run synchronous voice-processing logic on the main
+                  application thread. During a stress test, a spike in concurrent requests caused thread exhaustion,
+                  bringing down the entire DB connection pool.</p>
+                <div class="fc-divider"></div>
+                <p><strong>The Fix:</strong> Decoupled the architecture. Moved heavy inference tasks to a dedicated
+                  asynchronous worker queue (Redis/Celery), keeping the main API gateway responsive even under heavy
+                  load.</p>
+              </div>
+            </div>
+
+            <div class="fail-card glass-card">
+              <div class="fc-header">
+                <span class="fc-id">INCIDENT_03</span>
+                <span class="fc-status error">MODEL OVERFIT</span>
+              </div>
+              <h3>DoseWiz False Negatives</h3>
+              <div class="fc-body">
+                <p><strong>The Breakdown:</strong> The early interaction model achieved 99% training accuracy but failed
+                  spectacularly on unseen clinical data, failing to flag obscure but critical drug interactions.</p>
+                <div class="fc-divider"></div>
+                <p><strong>The Fix:</strong> Realized statistical ML was the wrong tool for deterministic medical logic.
+                  Rebuilt the core engine using a rules-based expert system paired with an ontology graph, ensuring 100%
+                  predictable outcomes.</p>
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ===== FAILURES (NEW) ===== -->
-    <section id="failures" class="section">
-      <div class="container">
-        <div class="sec-hdr">
-          <span class="sec-tag">POST_MORTEM_LOGS · MODULE_07</span>
-          <h2 class="sec-title">System Failures & Lessons</h2>
-          <div class="sec-line"></div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner container">
+        <div class="fi-left">
+          <span class="fi-brand">NikhilOS <span class="fi-ver">v2026.1</span></span>
+          <span class="fi-copy">Architected & Engineered by <span class="hl cyan">Nikhil Raj</span></span>
         </div>
-        <p class="section-lead">A true engineer's credibility isn't built on successes alone. It's built on the wreckage of failed prototypes and the systems rebuilt from them.</p>
-        
-        <div class="failures-grid">
-          
-          <div class="fail-card glass-card">
-            <div class="fc-header">
-              <span class="fc-id">INCIDENT_01</span>
-              <span class="fc-status error">CRITICAL FAILURE</span>
-            </div>
-            <h3>Rakshak GPS Drift Anomalies</h3>
-            <div class="fc-body">
-              <p><strong>The Breakdown:</strong> Initial hardware tests relied on consumer-grade GPS for outdoor positioning. Drift caused the unit to register false-positives and attempt navigation through solid obstacles, leading to physical collision.</p>
-              <div class="fc-divider"></div>
-              <p><strong>The Fix:</strong> Scrapped pure GPS. Implemented a sensor fusion algorithm utilizing IMU data, wheel odometry, and LIDAR SLAM to create a robust local coordinate frame resilient to GPS multi-path errors.</p>
-            </div>
-          </div>
-
-          <div class="fail-card glass-card">
-            <div class="fc-header">
-              <span class="fc-id">INCIDENT_02</span>
-              <span class="fc-status warning">ARCHITECTURE BOTTLENECK</span>
-            </div>
-            <h3>BranchIQ Monolith Crash</h3>
-            <div class="fc-body">
-              <p><strong>The Breakdown:</strong> Attempted to run synchronous voice-processing logic on the main application thread. During a stress test, a spike in concurrent requests caused thread exhaustion, bringing down the entire DB connection pool.</p>
-              <div class="fc-divider"></div>
-              <p><strong>The Fix:</strong> Decoupled the architecture. Moved heavy inference tasks to a dedicated asynchronous worker queue (Redis/Celery), keeping the main API gateway responsive even under heavy load.</p>
-            </div>
-          </div>
-
-          <div class="fail-card glass-card">
-            <div class="fc-header">
-              <span class="fc-id">INCIDENT_03</span>
-              <span class="fc-status error">MODEL OVERFIT</span>
-            </div>
-            <h3>DoseWiz False Negatives</h3>
-            <div class="fc-body">
-              <p><strong>The Breakdown:</strong> The early interaction model achieved 99% training accuracy but failed spectacularly on unseen clinical data, failing to flag obscure but critical drug interactions.</p>
-              <div class="fc-divider"></div>
-              <p><strong>The Fix:</strong> Realized statistical ML was the wrong tool for deterministic medical logic. Rebuilt the core engine using a rules-based expert system paired with an ontology graph, ensuring 100% predictable outcomes.</p>
-            </div>
-          </div>
-
+        <div class="fi-right">
+          <span class="fi-status"><span class="pulse-dot"></span> All Systems Operational</span>
+          <a href="mailto:contact@nikhilraj.example" class="btn-primary sm magnetic-btn">Initiate Handshake</a>
         </div>
       </div>
-    </section>
+    </footer>
 
-  </main>
+  </div><!-- /shell -->
 
-  <footer class="footer">
-    <div class="footer-inner container">
-      <div class="fi-left">
-        <span class="fi-brand">NikhilOS <span class="fi-ver">v2026.1</span></span>
-        <span class="fi-copy">Architected & Engineered by <span class="hl cyan">Nikhil Raj</span></span>
-      </div>
-      <div class="fi-right">
-        <span class="fi-status"><span class="pulse-dot"></span> All Systems Operational</span>
-        <a href="mailto:contact@nikhilraj.example" class="btn-primary sm magnetic-btn">Initiate Handshake</a>
-      </div>
-    </div>
-  </footer>
-
-</div><!-- /shell -->
-
-<script src="scripts/main.js"></script>
+  <script src="scripts/main.js"></script>
 </body>
+
 </html>
