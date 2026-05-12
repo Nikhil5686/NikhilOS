@@ -410,6 +410,7 @@ body:has(button:hover) #cx-ring, body:has(a:hover) #cx-ring, body:has(.magnetic-
 .mb-b { color: var(--blue); border-color: rgba(56,189,248,0.3); } .mb-b:hover { background: rgba(56,189,248,0.1); }
 .mb-p { color: var(--purple); border-color: rgba(139,92,246,0.3); } .mb-p:hover { background: rgba(139,92,246,0.1); }
 .mb-o { color: var(--orange); border-color: rgba(255,140,0,0.3); } .mb-o:hover { background: rgba(255,140,0,0.1); }
+.mb-g { color: var(--green); border-color: rgba(16,255,176,0.3); } .mb-g:hover { background: rgba(16,255,176,0.1); }
 
 /* ============================================
    VISION
